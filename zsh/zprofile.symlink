@@ -1,0 +1,19 @@
+ssh_askpass_mac=/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass
+export SSH_ASKPASS=$ssh_askpass_mac
+if [ -z ${DISPLAY+x} ]
+then
+        export DISPLAY=
+        launchctl setenv DISPLAY ""
+fi
+ssh_askpass_env=$(launchctl getenv SSH_ASKPASS)
+if [ "$ssh_askpass_env" != "$ssh_askpass_mac" ]
+then
+        launchctl setenv SSH_ASKPASS "$ssh_askpass_mac" && launchctl stop com.openssh.ssh-agent
+fi
+ssh-add()
+{
+        command ssh-add $@ < /dev/null
+}
+
+eval `keychain --eval --agents ssh id_ed25519 field_key id_ecdsa_throwaway`
+eval `keychain --eval --agents ssh --confirm test_admin_key_at_sanmina vcu_factory_testers temp_2020_02_14_log_push `
