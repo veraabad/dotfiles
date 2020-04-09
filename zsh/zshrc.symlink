@@ -2,10 +2,10 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/abad.vera/.oh-my-zsh"
+export ZSH="/Users/$HOME/.oh-my-zsh"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH=$PATH:$(ruby -e 'puts Gem.bindir')
-export PATH="/Users/abad.vera/Library/Python/2.7/bin:$PATH"
+export PATH="/Users/$HOME/Library/Python/2.7/bin:$PATH"
 # export DISPLAY=:0
 export HOMEBREW_GITHUB_API_TOKEN=
 
