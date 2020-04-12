@@ -124,8 +124,35 @@ check_dependencies() {
     else
         print_installed keychain
     fi
+
+    if does_not_exist htop
+    then
+        info "Installing htop"
+    else
+        print_installed htop
+    fi
+}
+
+install_zsh() {
+    brew install zsh
+    chsh -s $(which zsh)
+    success "$($(which zsh) --version) has been setup"
+}
+
+check_default_shell() {
+    case $SHELL in
+        *"zsh"* )
+            success "$($SHELL --version) is the default shell"
+            ;;
+        *"bash"* )
+            info "BASH is the default shell"
+            info "Will install zsh"
+            install_zsh
+            ;;
+    esac
 }
 
 # Turn on when git config files saved to dotfiles
 # setup_gitconfig
 # check_dependencies
+check_default_shell
