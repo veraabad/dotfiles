@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   Wed - 04/08/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: Sat - 04/11/2020
+# @Last Modified time: Sun - 04/12/2020
 #
 
 # Installer for macOS
@@ -38,7 +38,7 @@ fail() {
 }
 
 print_installed() {
-    echo "$1 is already installed"
+    success "$1 is already installed"
 }
 
 does_not_exist() {
@@ -86,6 +86,7 @@ setup_gitconfig() {
 check_dependencies() {
     if does_not_exist brew
     then
+        info "Installing Homebrew"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     else
         print_installed Homebrew
@@ -93,6 +94,7 @@ check_dependencies() {
 
     if does_not_exist tmux
     then
+        info "Installing tmux"
         brew install tmux
     else
         print_installed tmux
@@ -100,6 +102,7 @@ check_dependencies() {
 
     if does_not_exist ssh
     then
+        info "Installing openssh"
         brew install openssh
     else
         # check for updates
@@ -108,6 +111,7 @@ check_dependencies() {
 
     if does_not_exist vim
     then
+        info "Installing vim"
         brew install vim
     else
         print_installed vim
@@ -115,11 +119,13 @@ check_dependencies() {
 
     if does_not_exist keychain
     then
+        info "Installing Keychain"
         brew install keychain
     else
         print_installed keychain
     fi
 }
 
+# Turn on when git config files saved to dotfiles
+# setup_gitconfig
 # check_dependencies
-setup_gitconfig
