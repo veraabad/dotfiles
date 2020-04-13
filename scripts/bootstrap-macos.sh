@@ -152,7 +152,40 @@ check_default_shell() {
     esac
 }
 
+link_file() {
+    if true
+    then
+        info "$1"
+        info "$2"
+        return 0
+    fi
+    if [ -e "$2" ]
+    then
+        if [ "$(readlink "$2")" = "$1" ]
+        then
+            success "skipped $1"
+            return 0
+        else
+            mv "$2" "$2.backup"
+            success "moved $2 to $2.backup"
+        fi
+    fi
+    ln -sf "$1" "$2"
+    success "linked $1 to $2 "
+}
+
+install_dotfiles() {
+    info "Installing dotfiles"
+    find -H $DOTFILES_DIR -maxdepth 3 -name '*.symlink' -not -path '*.git*' |
+        while read -r src
+        do
+            dst="$HOME/.$(basename "${src%.*}")"
+            link_file "$src" "$dst"
+        done
+}
+
 # Turn on when git config files saved to dotfiles
 # setup_gitconfig
 # check_dependencies
-check_default_shell
+# check_default_shell
+install_dotfiles
