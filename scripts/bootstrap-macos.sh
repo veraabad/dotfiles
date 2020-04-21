@@ -153,12 +153,6 @@ check_default_shell() {
 }
 
 link_file() {
-    if true
-    then
-        info "$1"
-        info "$2"
-        return 0
-    fi
     if [ -e "$2" ]
     then
         if [ "$(readlink "$2")" = "$1" ]
@@ -188,4 +182,4 @@ install_dotfiles() {
 # setup_gitconfig
 # check_dependencies
 # check_default_shell
-install_dotfiles
+# install_dotfiles
