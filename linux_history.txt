@@ -1,0 +1,41 @@
+   1  sudo apt-get install vim
+    2  vim --version
+    3  ruby --version
+    4  cd Downloads
+    5  ls
+    6  unzip Hack.zip
+    7  cd
+    8  git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+    9  ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+   10  ls $ZSH_CUSTOM/themes
+   11  mv ~/Desktop/Parallels\ Shared\ Folders/Home/Documents/.zshrc ~/
+   12  vim ~/.zshrc
+   13  source ~/.zshrc
+   14  ruby --version
+   15  sudo apt-get install rubygems -y
+   16  ruby --version
+   17  gem install colorls
+   18  whoami
+   19  chown -R parallels:parallels /var/lib/gems/2.5.0
+   20  sudo chown -R parallels:parallels /var/lib/gems/2.5.0
+   21  gem install colorls
+   22  ls /usr/lib/ruby/2.5.0/*.h
+   23  sudo apt-get install ruby-full
+   24  gem install colorls
+   25  sudo chown -R parallels:parallels /usr/local/bin
+   26  gem install colorls
+   27  sudo chown -R parallels:parallels /usr/local
+   28  gem install colorls
+   29  colorls
+   30  source ~/.zshrc
+   31  ls
+   32  source ~/.zshrc
+   33  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+   34  source ~/.zshrc
+   35  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+   36  source ~/.zshrc
+   37  ls
+   38  lf
+   39  ld
+   40  lc
+
