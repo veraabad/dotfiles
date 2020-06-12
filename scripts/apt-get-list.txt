@@ -1,0 +1,7 @@
+openssh
+git
+vim
+tmux
+zsh
+htop
+ruby-full

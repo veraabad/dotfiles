@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   Wed - 04/08/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: Sun - 04/12/2020
+# @Last Modified time: 06/11/2020
 #
 
 # Installer for macOS
@@ -11,31 +11,13 @@
 cd "$(dirname $0)/.."
 
 DOTFILES_DIR=$(pwd -P)
+SCRIPT_DIR="scripts"
 
 # Exit if there are any errors along the way
 set -e
 
-info() {
-    # shellcheck disable=SC2059
-    printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
-
-user() {
-    # shellcheck disable=SC2059
-    printf "\r  [ \033[0;33m??\033[0m ] $1\n"
-}
-
-success() {
-    # shellcheck disable=SC2059
-    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
-
-fail() {
-    # shellcheck disable=SC2059
-    printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-    echo ''
-    exit
-}
+source ./$SCRIPT_DIR/print_source.sh
+source ./$SCRIPT_DIR/common.sh
 
 print_installed() {
     success "$1 is already installed"
@@ -134,52 +116,21 @@ check_dependencies() {
 }
 
 install_zsh() {
+    # TODO: remove this function and brew install of zsh
     brew install zsh
     chsh -s $(which zsh)
     success "$($(which zsh) --version) has been setup"
 }
 
-check_default_shell() {
-    case $SHELL in
-        *"zsh"* )
-            success "$($SHELL --version) is the default shell"
-            ;;
-        *"bash"* )
-            info "BASH is the default shell"
-            info "Will install zsh"
-            install_zsh
-            ;;
-    esac
-}
-
-link_file() {
-    if [ -e "$2" ]
-    then
-        if [ "$(readlink "$2")" = "$1" ]
-        then
-            success "skipped $1"
-            return 0
-        else
-            mv "$2" "$2.backup"
-            success "moved $2 to $2.backup"
-        fi
-    fi
-    ln -sf "$1" "$2"
-    success "linked $1 to $2 "
-}
-
-install_dotfiles() {
-    info "Installing dotfiles"
-    find -H $DOTFILES_DIR -maxdepth 3 -name '*.symlink' -not -path '*.git*' |
-        while read -r src
-        do
-            dst="$HOME/.$(basename "${src%.*}")"
-            link_file "$src" "$dst"
-        done
+# instal notify,
+install_zsh_plugins() {
+    git clone https://github.com/marzocchi/zsh-notify.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/notify
+    git clone https://github.com/unixorn/tumult.plugin.zsh.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/tumult
+    git clone https://github.com/oldratlee/hacker-quotes.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/hacker-quotes
 }
 
 # Turn on when git config files saved to dotfiles
 # setup_gitconfig
 # check_dependencies
 # check_default_shell
-# install_dotfiles
+install_dotfiles -a
