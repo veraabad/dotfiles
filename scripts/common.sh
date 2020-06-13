@@ -13,6 +13,8 @@ SCRIPT_DIR="scripts"
 # Exit if there are any errors along the way
 set -e
 
+ZSH_THEMES_DIR = $HOME/.oh-my-zsh/custom/themes
+ZSH_PLUGINS_DIR = $HOME/.oh-my-zsh/custom/plugins
 install_zsh() {
     chsh -s $(which zsh)
     success "$($(which zsh) --version) has been setup"
@@ -35,15 +37,23 @@ install_oh_my_zsh() {
     if [[ ! -e $HOME/.oh-my-zsh ]]; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
-    git clone https://github.com/denysdovhan/spaceship-prompt.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt
-    ln -s ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt/spaceship.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship.zsh-theme
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    if [[ ! -e $ZSH_THEMES_DIR/spaceship-prompt ]]; then
+        git clone https://github.com/denysdovhan/spaceship-prompt.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt
+        ln -s ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt/spaceship.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship.zsh-theme
+    fi
+    if [[ ! -e $ZSH_PLUGINS_DIR/zsh-autosuggestions ]]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    fi
+    if [[ ! -e $ZSH_PLUGINS_DIR/zsh-syntax-highlighting ]]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    fi
 }
 
 install_tmux_plugins() {
     mkdir -p $HOME/.tmux/plugins
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    if [[ ! -e $HOME/.tmux/plugins/tpm ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
 }
 
 link_file() {
@@ -62,7 +72,6 @@ link_file() {
     success "linked $1 to $2 "
 }
 
-# TODO: add option for different OSes
 install_dotfiles() {
     case "$1" in
         "-a")OS_EXT="macos" ;;
