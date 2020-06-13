@@ -1,4 +1,4 @@
-openssh
+openssh-server
 git
 vim
 tmux
