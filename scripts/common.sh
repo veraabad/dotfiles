@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/09/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/11/2020
+# @Last Modified time: 06/12/2020
 
 # Go to dotfiles directory
 cd "$(dirname $0)/.."
@@ -32,7 +32,9 @@ check_default_shell() {
 }
 
 install_oh_my_zsh() {
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    if [[ ! -e $HOME/.oh-my-zsh ]]; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    fi
     git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
     ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
