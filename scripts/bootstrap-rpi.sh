@@ -33,6 +33,8 @@ sudo sed -i 's/# en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
 sudo locale-gen en_US.UTF-8
 sudo update-locale en_US.UTF-8
 
+install_tmux_plugins
+
 # Link dotfiles
 install_dotfiles -r
 
