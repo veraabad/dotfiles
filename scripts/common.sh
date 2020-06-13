@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/09/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/12/2020
+# @Last Modified time: 06/13/2020
 
 # Go to dotfiles directory
 cd "$(dirname $0)/.."
@@ -74,7 +74,6 @@ install_dotfiles() {
         while read -r src
         do
             dst="$HOME/.$(basename "${src%_*.*}")"
-            echo "Linked file $dst"
-            # link_file "$src" "$dst"
+            link_file "$src" "$dst"
         done
 }
