@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/06/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/11/2020
+# @Last Modified time: 06/12/2020
 
 # Installer for raspberry pi
 
@@ -18,7 +18,7 @@ source ./$SCRIPT_DIR/common.sh
 
 sudo apt-get update
 # Install list of programs
-< apt-get-list.txt xargs sudo apt-get install -y
+< ./$SCRIPT_DIR/apt-get-list.txt xargs sudo apt-get install -y
 
 # Install colorls
 sudo chown -R ${USER}:${USER} "/var/lib/gems/"
