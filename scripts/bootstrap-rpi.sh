@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/06/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/12/2020
+# @Last Modified time: 06/13/2020
 
 # Installer for raspberry pi
 
@@ -25,7 +25,16 @@ sudo chown -R ${USER}:${USER} "/var/lib/gems/"
 sudo chown -R ${USER}:${USER} "/usr/local/"
 gem install colorls
 
-# Load zshrc file
-check_default_shell
+# Install zsh
 install_oh_my_zsh
+
+# Update locale
+sudo sed -i 's/# en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
+sudo locale-gen en_US.UTF-8
+sudo update-locale en_US.UTF-8
+
+# Link dotfiles
 install_dotfiles -r
+
+# Set zsh as the default
+check_default_shell
