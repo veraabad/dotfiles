@@ -13,8 +13,9 @@ SCRIPT_DIR="scripts"
 # Exit if there are any errors along the way
 set -e
 
-ZSH_THEMES_DIR = $HOME/.oh-my-zsh/custom/themes
-ZSH_PLUGINS_DIR = $HOME/.oh-my-zsh/custom/plugins
+ZSH_THEMES_DIR=$HOME/.oh-my-zsh/custom/themes
+ZSH_PLUGINS_DIR=$HOME/.oh-my-zsh/custom/plugins
+
 install_zsh() {
     chsh -s $(which zsh)
     success "$($(which zsh) --version) has been setup"
