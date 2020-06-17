@@ -29,6 +29,7 @@ zinit wait lucid for \
 
 zinit wait lucid for \
     OMZL::git.zsh \
+    atload"_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
     atload"unalias grv" \
     OMZP::git
@@ -49,6 +50,7 @@ zinit wait'!' lucid for \
 ### End of Themes
 
 export PATH=$PATH:$(ruby -e 'puts Gem.bindir')
+export PATH=$PATH:$HOME/.cargo/bin
 
 SPACESHIP_PROMPT_ADD_NEWLINE="true"
 SPACESHIP_CHAR_SYMBOL=" \uf0e7"
@@ -61,10 +63,8 @@ SPACESHIP_USER_SHOW="true"
 
 source $(dirname $(gem which colorls))/tab_complete.sh
 
-alias ls='colorls --sort-dirs --report'
-alias lc='colorls --tree'
-alias lf='colorls --files'
-alias gs='colorls --gs'
+alias ls='exa --icons --sort=name'
+alias lc='exa --icons -T --level=3'
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
