@@ -4,4 +4,5 @@ vim
 tmux
 zsh
 htop
-ruby-full
+libssl-dev
+cmake

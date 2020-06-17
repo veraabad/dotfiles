@@ -20,13 +20,8 @@ sudo apt-get update
 # Install list of programs
 < ./$SCRIPT_DIR/apt-get-list.txt xargs sudo apt-get install -y
 
-# Install colorls
-sudo chown -R ${USER}:${USER} "/var/lib/gems/"
-sudo chown -R ${USER}:${USER} "/usr/local/"
-gem install colorls
-
 # Update locale
-sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
+# sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 sudo sed -i 's/# en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
 sudo locale-gen en_US.UTF-8
 sudo update-locale en_US.UTF-8
