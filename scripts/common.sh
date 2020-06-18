@@ -63,7 +63,7 @@ install_exa() {
         cd ~/
         wget -c https://github.com/libgit2/libgit2/releases/download/v1.0.1/libgit2-1.0.1.zip
         unzip libgit2-1.0.1.zip
-        cd libgit2-1.0.1.zip
+        cd libgit2-1.0.1
         mkdir build && cd build
         cmake ..
         cmake --build .
