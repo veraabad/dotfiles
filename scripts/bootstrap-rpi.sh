@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/06/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/17/2020
+# @Last Modified time: 06/18/2020
 
 # Installer for raspberry pi
 
@@ -27,6 +27,7 @@ sudo locale-gen en_US.UTF-8
 sudo update-locale en_US.UTF-8
 
 install_tmux_plugins
+install_exa
 
 # Link dotfiles
 install_dotfiles -r

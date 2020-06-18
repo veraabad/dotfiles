@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/09/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/13/2020
+# @Last Modified time: 06/18/2020
 
 # Go to dotfiles directory
 cd "$(dirname $0)/.."
@@ -47,6 +47,32 @@ install_oh_my_zsh() {
     fi
     if [[ ! -e $ZSH_PLUGINS_DIR/zsh-syntax-highlighting ]]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    fi
+}
+
+install_exa() {
+    if [[ ! $(command -v exa 2>/dev/null) ]]; then
+        # For raspberry pi exa needs to be built
+        # check rust compiler is installed
+        if [[ ! $(command -v rustup 2>/dev/null) ]]; then
+            # cap RAM usage as rpi does not have much
+            # export RUSTUP_UNPACK_RAM=204472320
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        fi
+        # Install libgit2
+        cd ~/
+        wget -c https://github.com/libgit2/libgit2/releases/download/v1.0.1/libgit2-1.0.1.zip
+        unzip libgit2-1.0.1.zip
+        cd libgit2-1.0.1.zip
+        mkdir build && cd build
+        cmake ..
+        cmake --build .
+        cmake --build . --target install
+        cd ~/
+        git clone https://github.com/ogham/exa.git
+        cd exa
+        make install
+        cd $DOTFILES_DIR
     fi
 }
 
