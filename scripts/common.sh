@@ -60,6 +60,7 @@ install_exa() {
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
         fi
         # Install libgit2
+        source $HOME/.cargo/env
         cd ~/
         wget -c https://github.com/libgit2/libgit2/releases/download/v1.0.1/libgit2-1.0.1.zip
         unzip libgit2-1.0.1.zip
