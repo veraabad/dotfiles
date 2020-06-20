@@ -29,7 +29,9 @@ zinit wait lucid for \
 
 zinit wait lucid for \
     OMZL::git.zsh \
-    atload"_zsh_autosuggest_start" \
+    OMZL::history.zsh \
+    OMZP::history \
+    atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
     atload"unalias grv" \
     OMZP::git
@@ -44,12 +46,12 @@ PS1="Loading Prompt >" # provide a simple prompt till the theme loads
 
 zinit wait'!' lucid for \
     OMZL::prompt_info_functions.zsh \
-    atload"!spaceship_exec_time_precmd_hook" \
+    atload"!spaceship_exec_time_precmd_hook; _zsh_autosuggest_start" \
     denysdovhan/spaceship-prompt
 
 ### End of Themes
 
-export PATH=$PATH:$(ruby -e 'puts Gem.bindir')
+# export PATH=$PATH:$(ruby -e 'puts Gem.bindir')
 export PATH=$PATH:$HOME/.cargo/bin
 
 SPACESHIP_PROMPT_ADD_NEWLINE="true"
@@ -60,8 +62,6 @@ SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
 SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
 SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
 SPACESHIP_USER_SHOW="true"
-
-source $(dirname $(gem which colorls))/tab_complete.sh
 
 alias ls='exa --icons --sort=name'
 alias lc='exa --icons -T --level=3'
