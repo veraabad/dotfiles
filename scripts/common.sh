@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/09/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/18/2020
+# @Last Modified time: 06/23/2020
 
 # Go to dotfiles directory
 cd "$(dirname $0)/.."
@@ -55,8 +55,10 @@ install_exa() {
         # For raspberry pi exa needs to be built
         # check rust compiler is installed
         if [[ ! $(command -v rustup 2>/dev/null) ]]; then
-            # cap RAM usage as rpi does not have much
-            # export RUSTUP_UNPACK_RAM=204472320
+            # cap RAM usage as rpi zero does not have enough
+            if [[ $(cat /proc/cpuinfo | grep "Raspberry Pi Zero") ]]; then
+                export RUSTUP_UNPACK_RAM=204472320
+            fi
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
         fi
         # Install libgit2
