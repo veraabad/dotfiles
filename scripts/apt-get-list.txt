@@ -6,3 +6,4 @@ zsh
 htop
 libssl-dev
 cmake
+python3-venv
