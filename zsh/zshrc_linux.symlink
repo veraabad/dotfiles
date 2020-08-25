@@ -46,7 +46,6 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 alias ls='colorls --sort-dirs --report'
 alias lc='colorls --tree'
 alias lf='colorls --files'
-alias gs='colorls --gs'
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
