@@ -22,8 +22,7 @@ sudo apt-get update
 
 # Install colorls
 sudo chown -R ${USER}:${USER} "/var/lib/gems/"
-sudo chown -R ${USER}:${USER} "/usr/local/"
-gem install colorls
+sudo gem install colorls
 
 # Update locale
 # sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
