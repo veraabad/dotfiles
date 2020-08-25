@@ -1,0 +1,10 @@
+openssh-server
+git
+vim
+tmux
+zsh
+htop
+ruby-full
+libssl-dev
+cmake
+python3-venv
