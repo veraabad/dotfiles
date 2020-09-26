@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/06/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/18/2020
+# @Last Modified time: 09/25/2020
 
 # Installer for raspberry pi
 
@@ -25,8 +25,6 @@ sudo apt-get update
 sudo sed -i 's/# en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
 sudo locale-gen en_US.UTF-8
 sudo update-locale en_US.UTF-8
-
-sudo chown -R ${USER}:${USER} "/usr/local/"
 
 install_tmux_plugins
 install_exa
