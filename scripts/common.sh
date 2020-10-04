@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/09/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/23/2020
+# @Last Modified time: 10/03/2020
 
 # Go to dotfiles directory
 cd "$(dirname $0)/.."
@@ -32,6 +32,16 @@ check_default_shell() {
             install_zsh
             ;;
     esac
+}
+
+check_ohmzysh_plugin() {
+    case "$1" in
+        "-p")SRC_DIR=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins ;;
+        "-t")SRC_DIR=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes ;;
+    esac
+    if [[ ! -d $SRC_DIR/$2 ]]; then
+        git clone $3 ${SRC_DIR}/$2
+    fi
 }
 
 install_oh_my_zsh() {

@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   Wed - 04/08/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/11/2020
+# @Last Modified time: 10/03/2020
 #
 
 # Installer for macOS
@@ -73,64 +73,33 @@ check_dependencies() {
     else
         print_installed Homebrew
     fi
+    # Install programs
+    brew bundle
+}
 
-    if does_not_exist tmux
+install_colorls() {
+    if does_not_exist colorls
     then
-        info "Installing tmux"
-        brew install tmux
+        info "Installing colorls"
+        gem install colorls
     else
-        print_installed tmux
-    fi
-
-    if does_not_exist ssh
-    then
-        info "Installing openssh"
-        brew install openssh
-    else
-        # check for updates
-        brew upgrade openssh
-    fi
-
-    if does_not_exist vim
-    then
-        info "Installing vim"
-        brew install vim
-    else
-        print_installed vim
-    fi
-
-    if does_not_exist keychain
-    then
-        info "Installing Keychain"
-        brew install keychain
-    else
-        print_installed keychain
-    fi
-
-    if does_not_exist htop
-    then
-        info "Installing htop"
-    else
-        print_installed htop
+        print_installed colorls
     fi
 }
 
-install_zsh() {
-    # TODO: remove this function and brew install of zsh
-    brew install zsh
-    chsh -s $(which zsh)
-    success "$($(which zsh) --version) has been setup"
-}
-
-# instal notify,
+# install notify,
 install_zsh_plugins() {
-    git clone https://github.com/marzocchi/zsh-notify.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/notify
-    git clone https://github.com/unixorn/tumult.plugin.zsh.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/tumult
-    git clone https://github.com/oldratlee/hacker-quotes.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/hacker-quotes
+    check_ohmzysh_plugin -p notify https://github.com/marzocchi/zsh-notify.git
+    check_ohmzysh_plugin -p tumult https://github.com/unixorn/tumult.plugin.zsh.git
+    check_ohmzysh_plugin -p hacker-quotes https://github.com/oldratlee/hacker-quotes.git
 }
 
 # Turn on when git config files saved to dotfiles
-# setup_gitconfig
-# check_dependencies
-# check_default_shell
+check_dependencies
+setup_gitconfig
+install_oh_my_zsh
+install_zsh_plugins
+install_tmux_plugins
+install_colorls
 install_dotfiles -a
+check_default_shell
