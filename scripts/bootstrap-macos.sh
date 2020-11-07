@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   Wed - 04/08/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 10/03/2020
+# @Last Modified time: 10/08/2020
 #
 
 # Installer for macOS
@@ -74,7 +74,9 @@ check_dependencies() {
         print_installed Homebrew
     fi
     # Install programs
-    brew bundle
+    cd ${SCRIPT_DIR}
+    brew bundle --verbose --debug
+    cd -
 }
 
 install_colorls() {
