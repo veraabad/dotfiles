@@ -54,5 +54,9 @@ else
   export EDITOR='mvim'
 fi
 
+if [ ! -S ~/.ssh/ssh_auth_sock ] && [ -S "$SSH_AUTH_SOCK" ]; then
+  ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+fi
+
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
