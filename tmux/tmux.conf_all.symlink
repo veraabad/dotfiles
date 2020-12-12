@@ -1,7 +1,6 @@
 # Quality of life
 set -g default-terminal "screen-256color"
 set -g history-limit 10000
-set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
 
 # Search Mode VI
 set-window-option -g mode-keys vi
