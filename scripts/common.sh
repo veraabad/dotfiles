@@ -17,7 +17,7 @@ ZSH_THEMES_DIR=$HOME/.oh-my-zsh/custom/themes
 ZSH_PLUGINS_DIR=$HOME/.oh-my-zsh/custom/plugins
 
 install_zsh() {
-    chsh -s $(which zsh)
+    chsh -s $(which zsh) || sudo chsh -s $(which zsh) $(whoami)
     success "$($(which zsh) --version) has been setup"
 }
 
