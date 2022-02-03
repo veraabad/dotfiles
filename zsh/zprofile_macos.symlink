@@ -15,5 +15,5 @@ ssh-add()
         command ssh-add $@ < /dev/null
 }
 
-eval `keychain --eval --agents ssh id_ed25519 field_key id_ecdsa_throwaway`
-eval `keychain --eval --agents ssh --confirm test_admin_key_at_sanmina vcu_factory_testers temp_2020_02_14_log_push `
+# Load any customizations local to this machine
+source ~/.zprofile.local

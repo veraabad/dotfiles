@@ -75,7 +75,7 @@ check_dependencies() {
     fi
     # Install programs
     cd ${SCRIPT_DIR}
-    brew bundle --verbose --debug
+    brew bundle --verbose --debug || true
     cd -
 }
 
