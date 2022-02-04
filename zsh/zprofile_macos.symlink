@@ -16,4 +16,7 @@ ssh-add()
 }
 
 # Load any customizations local to this machine
-source ~/.zprofile.local
+if [[ -e ~/.zprofile.local ]]
+then
+        source ~/.zprofile.local
+fi

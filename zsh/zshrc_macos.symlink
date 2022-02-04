@@ -12,7 +12,7 @@ export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 ZSH_THEME="spaceship"
 
 SPACESHIP_PROMPT_ADD_NEWLINE="true"
-SPACESHIP_CHAR_SYMBOL=" \uf0e7"
+SPACESHIP_CHAR_SYMBOL=" \uf054"
 SPACESHIP_CHAR_PREFIX="\uf296"
 SPACESHIP_CHAR_SUFFIX=(" ")
 SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
@@ -71,4 +71,7 @@ fi
 export LANG=en_US.UTF-8
 
 # Load any local customizatio
-source ~/.zshrc.local
+if [[ -e ~/.zshrc.local ]]
+then
+    source ~/.zshrc.local
+fi
