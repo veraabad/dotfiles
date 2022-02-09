@@ -70,8 +70,43 @@ fi
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# Load any local customizatio
+# Load any local customization
 if [[ -e ~/.zshrc.local ]]
 then
     source ~/.zshrc.local
 fi
+
+caffeinate-on-process() {
+    # set -x
+    DISPLAY_ON=""
+    while getopts "dw:" arg
+    do
+        case ${arg} in
+            d) DISPLAY_ON="-d" ;;
+            w) PROCESS_NAME=${OPTARG} ;;
+        esac
+    done
+
+    GREP_RESULTS=$(ps -A | grep ${PROCESS_NAME})
+    RESULT_COUNT=$(echo $GREP_RESULTS | grep -c '^')
+    GRAB_PID='head -1 | xargs | cut -d " " -f 1'
+    if [[ ${RESULT_COUNT} -gt 2 ]]
+    then
+        RELEVANT_RESULTS=$(echo ${GREP_RESULTS} | head -$(($RESULT_COUNT-1)))
+        RESULT_COUNTER=1
+        RESULT_ARRAY=()
+        echo ${RELEVANT_RESULTS} | while read RESULT
+        do
+            echo "${RESULT_COUNTER} -- ${RESULT}"
+            RESULT_ARRAY+=($RESULT)
+            RESULT_COUNTER=$(($RESULT_COUNTER+1))
+        done
+        echo "Enter the index of the process you would like to caffeinate on"
+        read CHOICE
+        PROCESSS_PID=$(echo ${RESULT_ARRAY[$CHOICE]} | eval ${GRAB_PID})
+    else
+        PROCESSS_PID=$(echo $GREP_RESULTS | eval ${GRAB_PID})
+    fi
+    echo "caffeinate -w ${PROCESSS_PID} ${DISPLAY_ON}"
+    caffeinate -w ${PROCESSS_PID} ${DISPLAY_ON} &
+}
