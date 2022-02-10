@@ -1,22 +1,42 @@
-ssh_askpass_mac=/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass
-export SSH_ASKPASS=$ssh_askpass_mac
-if [ -z ${DISPLAY+x} ]
-then
-        export DISPLAY=
-        launchctl setenv DISPLAY ""
-fi
-ssh_askpass_env=$(launchctl getenv SSH_ASKPASS)
-if [ "$ssh_askpass_env" != "$ssh_askpass_mac" ]
-then
-        launchctl setenv SSH_ASKPASS "$ssh_askpass_mac" && launchctl stop com.openssh.ssh-agent
-fi
-ssh-add()
-{
-        command ssh-add $@ < /dev/null
-}
+set -o noclobber
 
-# Load any customizations local to this machine
-if [[ -e ~/.zprofile.local ]]
-then
-        source ~/.zprofile.local
-fi
+LOCKFILE="/var/tmp/zprofile.lock"
+
+while [ true ]
+do
+        if (! echo "$$" > ${LOCKFILE} ) 2> /dev/null
+        then
+                continue
+        fi
+        trap "rm -f ${LOCKFILE}; exit $?" INT TERM EXIT
+
+        # Carry out tasks
+        ssh_askpass_mac=/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass
+        export SSH_ASKPASS=$ssh_askpass_mac
+        if [ -z ${DISPLAY+x} ]
+        then
+                export DISPLAY=
+                launchctl setenv DISPLAY ""
+        fi
+        ssh_askpass_env=$(launchctl getenv SSH_ASKPASS)
+        if [ "$ssh_askpass_env" != "$ssh_askpass_mac" ]
+        then
+                launchctl setenv SSH_ASKPASS "$ssh_askpass_mac" && launchctl stop com.openssh.ssh-agent
+        fi
+        ssh-add()
+        {
+                command ssh-add $@ < /dev/null
+        }
+
+        # Load any customizations local to this machine
+        if [[ -e ~/.zprofile.local ]]
+        then
+                source ~/.zprofile.local
+        fi
+
+        # Cleanup
+        rm -rf ${LOCKFILE}
+        trap - INT TERM EXIT
+        break
+done
+
