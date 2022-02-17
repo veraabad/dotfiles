@@ -107,3 +107,12 @@ caffeinate-on-process() {
     echo "caffeinate -w ${PROCESSS_PID} ${DISPLAY_ON}"
     caffeinate -w ${PROCESSS_PID} ${DISPLAY_ON} &
 }
+
+update-omz-custom-plugins() {
+    for d in $(find ${ZSH}/custom/plugins/ -maxdepth 1 -mindepth 1 -type d)
+    do
+        cd $d
+        gfa && ggl
+        cd -
+    done
+}
