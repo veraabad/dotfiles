@@ -47,11 +47,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-source $(dirname $(gem which colorls))/tab_complete.sh
-
-alias ls='colorls --sort-dirs --report'
-alias lc='colorls --tree'
-alias lf='colorls --files'
+alias ls='exa --group-directories-first --icons'
+alias lc='exa --tree'
 alias dl='diskutil list'
 alias dk_ej_2='diskutil eject /dev/disk2'
 alias mac-update='sudo softwareUpdate -l -i -a -R'
