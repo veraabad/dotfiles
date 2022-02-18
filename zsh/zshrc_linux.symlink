@@ -45,9 +45,8 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 source $(dirname $(gem which colorls))/tab_complete.sh
 
-alias ls='colorls --sort-dirs --report'
-alias lc='colorls --tree'
-alias lf='colorls --files'
+alias ls='exa --group-directories-first --icons'
+alias lc='exa --tree'
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then

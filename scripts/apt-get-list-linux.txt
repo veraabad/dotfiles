@@ -9,3 +9,5 @@ libssl-dev
 cmake
 python3-venv
 curl
+exa
+ranger
