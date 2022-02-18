@@ -68,10 +68,7 @@ fi
 export LANG=en_US.UTF-8
 
 # Load any local customization
-if [[ -e ~/.zshrc.local ]]
-then
-    source ~/.zshrc.local
-fi
+[ -f ~/.zshrc.local ] && . ~/.zshrc.local
 
 caffeinate-on-process() {
     # set -x
