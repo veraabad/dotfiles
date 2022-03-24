@@ -81,7 +81,7 @@ caffeinate-on-process() {
         esac
     done
 
-    GREP_RESULTS=$(ps -A | grep ${PROCESS_NAME})
+    GREP_RESULTS=$(ps -A | grep ${PROCESS_NAME} | grep -v "grep")
     RESULT_COUNT=$(echo $GREP_RESULTS | grep -c '^')
     GRAB_PID='head -1 | xargs | cut -d " " -f 1'
     if [[ ${RESULT_COUNT} -gt 2 ]]
