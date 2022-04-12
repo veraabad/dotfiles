@@ -35,6 +35,8 @@ install_oh_my_zsh
 
 install_tmux_plugins
 
+install_pyenv_linux
+
 # Link dotfiles
 install_dotfiles -l
 

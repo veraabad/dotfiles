@@ -126,3 +126,8 @@ install_dotfiles() {
             link_file "$src" "$dst"
         done
 }
+
+install_pyenv_linux() {
+    curl https://pyenv.run | bash
+}
+
