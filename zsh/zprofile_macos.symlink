@@ -20,6 +20,7 @@ do
         {
                 command ssh-add $@ < /dev/null
         }
+        eval "$(pyenv init --path)"
 
         # Load any customizations local to this machine
         [ -f ~/.zprofile.local ] && . ~/.zprofile.local

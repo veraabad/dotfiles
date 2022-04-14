@@ -67,6 +67,9 @@ fi
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 # Load any local customization
 [ -f ~/.zshrc.local ] && . ~/.zshrc.local
 
