@@ -1,5 +1,9 @@
 set -o noclobber
 
+if [[ $(arch) == 'arm64' ]]; then
+        export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+fi
+
 LOCKFILE="/var/tmp/zprofile.lock"
 
 while [ true ]
