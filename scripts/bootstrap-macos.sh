@@ -102,6 +102,6 @@ setup_gitconfig
 install_oh_my_zsh
 install_zsh_plugins
 install_tmux_plugins
-install_colorls
+# install_colorls
 install_dotfiles -a
 check_default_shell
