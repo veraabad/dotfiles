@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/09/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 10/03/2020
+# @Last Modified time: Thu - 06/23/2022
 
 # Go to dotfiles directory
 cd "$(dirname $0)/.."
@@ -131,3 +131,6 @@ install_pyenv_linux() {
     curl https://pyenv.run | bash
 }
 
+install_starship_linux() {
+    curl -sS https://starship.rs/install.sh | sh
+}

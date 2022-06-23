@@ -2,7 +2,7 @@
 # @Author: Abad Vera
 # @Date:   06/06/2020
 # @Last Modified by:   Abad Vera
-# @Last Modified time: 06/18/2020
+# @Last Modified time: Thu - 06/23/2022
 
 # Installer for raspberry pi
 
@@ -36,6 +36,7 @@ install_oh_my_zsh
 install_tmux_plugins
 
 install_pyenv_linux
+install_starship_linux
 
 # Link dotfiles
 install_dotfiles -l

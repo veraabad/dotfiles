@@ -9,16 +9,16 @@ export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
 
-SPACESHIP_PROMPT_ADD_NEWLINE="true"
-SPACESHIP_CHAR_SYMBOL=" \uf054"
+# SPACESHIP_PROMPT_ADD_NEWLINE="true"
+# SPACESHIP_CHAR_SYMBOL=" \uf054"
 SPACESHIP_CHAR_PREFIX="\uf296"
-SPACESHIP_CHAR_SUFFIX=(" ")
-SPACESHIP_CHAR_COLOR_SUCCESS="green"
-SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
-SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
-SPACESHIP_USER_SHOW="true"
+# SPACESHIP_CHAR_SUFFIX=(" ")
+# SPACESHIP_CHAR_COLOR_SUCCESS="green"
+# SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
+# SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
+# SPACESHIP_USER_SHOW="true"
 
 # Update oh-my-zsh without asking
 DISABLE_UPDATE_PROMPT="true"
@@ -72,6 +72,8 @@ eval "$(pyenv virtualenv-init -)"
 
 # Load any local customization
 [ -f ~/.zshrc.local ] && . ~/.zshrc.local
+
+eval "$(starship init zsh)"
 
 caffeinate-on-process() {
     # set -x

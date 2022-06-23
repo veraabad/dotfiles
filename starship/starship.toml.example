@@ -1,0 +1,8 @@
+# Timeout after 1 second
+command_timeout = 1000
+
+[character] # The name of the module we are configuring is "character"
+# format = "\uf296 $symbol"
+format = "\ufba7 $symbol "
+success_symbol = "[\uf054](bold green)"
+error_symbol = "[\uf054](bold red)"

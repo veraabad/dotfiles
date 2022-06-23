@@ -9,16 +9,16 @@ export PATH="$PYENV_ROOT/bin:$PATH:$(ruby -e 'puts Gem.bindir')"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
 
-SPACESHIP_PROMPT_ADD_NEWLINE="true"
-SPACESHIP_CHAR_SYMBOL=" \uf054"
-SPACESHIP_CHAR_PREFIX="\ue712"
-SPACESHIP_CHAR_SUFFIX=(" ")
-SPACESHIP_CHAR_COLOR_SUCCESS="green"
-SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
-SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
-SPACESHIP_USER_SHOW="true"
+# SPACESHIP_PROMPT_ADD_NEWLINE="true"
+# SPACESHIP_CHAR_SYMBOL=" \uf054"
+# SPACESHIP_CHAR_PREFIX="\ue712"
+# SPACESHIP_CHAR_SUFFIX=(" ")
+# SPACESHIP_CHAR_COLOR_SUCCESS="green"
+# SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
+# SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
+# SPACESHIP_USER_SHOW="true"
 
 # Uncomment the following line to automatically update without prompting.
 DISABLE_UPDATE_PROMPT="true"
@@ -47,6 +47,8 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 
 alias ls='exa --group-directories-first --icons'
 alias lc='exa --tree'
+
+eval "$(starship init zsh)"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
