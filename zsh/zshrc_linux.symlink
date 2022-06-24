@@ -59,7 +59,7 @@ fi
 
 # Symlink ssh-agent for use in tmux
 if [ -z ${TMUX+x} ]; then
-  if [ ! -S ~/.ssh/ssh_auth_sock ] && [ -S "$SSH_AUTH_SOCK" ]; then
+  if [ ! -e ~/.ssh/ssh_auth_sock ] && [ -e "$SSH_AUTH_SOCK" ]; then
     ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
   fi
 else
