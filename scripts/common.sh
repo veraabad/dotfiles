@@ -108,6 +108,9 @@ link_file() {
             success "moved $2 to $2.backup"
         fi
     fi
+
+    # Create the destination directory if it doesn't exist
+    mkdir -p "$(dirname "$2")"
     ln -sf "$1" "$2"
     success "linked $1 to $2 "
 }
@@ -122,7 +125,7 @@ install_dotfiles() {
     find -H $DOTFILES_DIR -maxdepth 3 -name '*.symlink' -not -path '*.git*' | grep -E "\w*($OS_EXT|all).symlink$" |
         while read -r src
         do
-            dst="$HOME/.$(basename "${src%_*.*}")"
+            dst="$HOME/.$(echo "$(basename "${src%_*.*}")" | tr ':' '/')"
             link_file "$src" "$dst"
         done
 }
