@@ -119,3 +119,5 @@ update-omz-custom-plugins() {
         cd -
     done
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
