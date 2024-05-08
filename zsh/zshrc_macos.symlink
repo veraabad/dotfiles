@@ -58,11 +58,16 @@ zstyle ':notify:*' error-title "Command failed (in #{time_elapsed} secondds)"
 zstyle ':notify:*' success-title "Command finished (in #{time_elapsed} seconds)"
 zstyle ':notify:*' command-complete-timeout 15
 
+# Neovim configuration
+NVIM_CUSTOM=~/.config/nvim-custom
+export NVIM_CUSTOM
+alias nvb='XDG_DATA_HOME=$NVIM_CUSTOM/share XDG_CONFIG_HOME=$NVIM_CUSTOM nvim'
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
+    export EDITOR='nvb'
 else
-    export EDITOR='subl'
+    export EDITOR='nvb'
 fi
 
 # You may need to manually set your language environment
