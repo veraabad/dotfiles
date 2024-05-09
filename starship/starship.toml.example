@@ -1,8 +1,19 @@
-# Timeout after 1 second
+"$schema" = 'https://starship.rs/config-schema.json'
+add_newline = true
+
+format = """
+$all\
+$env_var $character"""
+
+# timeout after 1 second
 command_timeout = 1000
 
+[env_var.CUSTOM_USER_CHAR]
+variable = "CUSTOM_USER_CHAR"
+default = "\uf296"
+format = '[$env_value]($style)'
+style = "bold"
+
 [character] # The name of the module we are configuring is "character"
-# format = "\uf296 $symbol"
-format = "\ufba7 $symbol "
 success_symbol = "[\uf054](bold green)"
 error_symbol = "[\uf054](bold red)"
