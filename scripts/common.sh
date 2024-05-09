@@ -130,22 +130,23 @@ install_dotfiles() {
         done
 }
 
+run_install() {
+    case "$1" in
+        "-a")OS_EXT="macos" ;;
+        "-l")OS_EXT="linux" ;;
+        "-r")OS_EXT="rpi" ;;
+    esac
+    info "Running Install Scripts"
+    git ls-tree --name-only -r HEAD | grep -E "\w*install_($OS_EXT|all).sh" | while read -r installer; do
+        info "› ${installer}..."
+        sh -c "$installer"
+    done
+}
+
 install_pyenv_linux() {
     curl https://pyenv.run | bash
 }
 
 install_starship_linux() {
     curl -sS https://starship.rs/install.sh | sh
-}
-
-install_neovim_config() {
-    NVIM_CUSTOM=~/.config/nvim-custom
-    export NVIM_CUSTOM
-
-    rm -rf $NVIM_CUSTOM
-
-    mkdir -p $NVIM_CUSTOM/share
-    mkdir -p $NVIM_CUSTOM/nvim
-
-    stow --restow --target=$NVIM_CUSTOM/nvim .
 }

@@ -105,4 +105,4 @@ install_tmux_plugins
 # install_colorls
 install_dotfiles -a
 check_default_shell
-install_neovim_config
+run_install -a
