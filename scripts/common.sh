@@ -7,7 +7,7 @@
 # Go to dotfiles directory
 cd "$(dirname $0)/.."
 
-DOTFILES_DIR=$(pwd -P)
+export DOTFILES_DIR=$(pwd -P)
 SCRIPT_DIR="scripts"
 
 # Exit if there are any errors along the way
@@ -139,7 +139,7 @@ run_install() {
     info "Running Install Scripts"
     git ls-tree --name-only -r HEAD | grep -E "\w*install_($OS_EXT|all).sh" | while read -r installer; do
         info "› ${installer}..."
-        sh -c "$installer"
+        $installer
     done
 }
 
