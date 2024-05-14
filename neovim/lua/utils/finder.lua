@@ -27,8 +27,14 @@ function M.find_files()
 	if not ok then
 		telescope.find_files(opts)
 	end
-  -- local fzf = require "fzf-lua"
-  -- if vim.fn.system "git rev-parse --is-inside-work-tree" == true then
+
+-- Find dotfiles
+function M.find_dotfiles()
+  require("telescope.builtin").find_files {
+    prompt_title = "<Dotfiles>",
+    cwd = "$HOME/.dotfiles/",
+  }
+end
   --   fzf.git_files()
   -- else
   --   fzf.files()
