@@ -35,6 +35,14 @@ function M.find_dotfiles()
     cwd = "$HOME/.dotfiles/",
   }
 end
+
+function M.open_ssh_config()
+  local ssh_config_path = "$HOME/.ssh/config"
+  vim.cmd("edit".. ssh_config_path)
+end
+
+-- local fzf = require "fzf-lua"
+-- if vim.fn.system "git rev-parse --is-inside-work-tree" == true then
   --   fzf.git_files()
   -- else
   --   fzf.files()

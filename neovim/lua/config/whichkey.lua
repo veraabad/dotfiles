@@ -33,6 +33,7 @@ function M.setup()
       name = "Find",
       f = { "<cmd>lua require('utils.finder').find_files()<cr>", "Files" },
       d = { "<cmd>lua require('utils.finder').find_dotfiles()<cr>", "Dotfiles" },
+      s = { "<cmd>lua require('utils.finder').open_ssh_config()<cr>", "SSH Config" },
       b = { "<cmd>Telescope buffers<cr>", "Buffers" },
       o = { "<cmd>Telescope oldfiles<cr>", "Old Files" },
       g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
