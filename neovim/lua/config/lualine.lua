@@ -20,7 +20,7 @@ local function separator()
 end
 
 local function lsp_client()
-  local buf_clients = vim.lsp.buf_get_clients()
+  local buf_clients = vim.lsp.get_clients()
   if next(buf_clients) == nil then
     return ""
   end
@@ -37,7 +37,7 @@ local function lsp_progress(_, is_active)
   if not is_active then
     return
   end
-  local messages = vim.lsp.util.get_progress_messages()
+  local messages = vim.lsp.status()
   if #messages == 0 then
     return ""
   end
@@ -56,7 +56,7 @@ local function lsp_progress(_, is_active)
 end
 
 function M.setup()
-  -- local gps = require "nvim-gps"	
+  -- local gps = require "nvim-gps"
 
   require("lualine").setup {
     options = {
