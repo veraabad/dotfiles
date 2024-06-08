@@ -178,14 +178,12 @@ function M.setup()
     if PLUGINS.nvim_treesitter.enabled then
       use {
         "nvim-treesitter/nvim-treesitter",
-        disable = true,
-        -- run = function()
-        -- 	local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-        -- 	ts_update()
-        -- end,
+        run = function()
+        	local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        	ts_update()
+        end,
         opt = true,
         event = "BufRead",
-        run = ":TSUpdate",
         config = function()
           require("config.treesitter").setup()
         end,

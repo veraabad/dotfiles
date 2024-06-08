@@ -1,5 +1,5 @@
 PLUGINS = {
 	nvim_treesitter = {
-		enabled = false,
+		enabled = true,
 	}
 }
