@@ -188,6 +188,7 @@ function M.setup()
           require("config.treesitter").setup()
         end,
         requires = {
+          {"tanvirtin/monokai.nvim"},
           {"nvim-treesitter/nvim-treesitter-textobjects"},
         },
       }
