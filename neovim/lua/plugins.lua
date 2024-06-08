@@ -300,7 +300,7 @@ function M.setup()
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lua",
-        "zbirenbaum/copilot.lua",
+        "zbirenbaum/copilot-cmp",
         "ray-x/cmp-treesitter",
         "hrsh7th/cmp-cmdline",
         "saadparwaiz1/cmp_luasnip",
@@ -358,7 +358,8 @@ function M.setup()
     -- Copilot
     use {
       "zbirenbaum/copilot-cmp",
-      after = { "copilot.lua", "nvim-cmp" },
+      after = { "copilot.lua" },
+      -- after = { "copilot.lua", "nvim-cmp" },
       config = function ()
         require("copilot_cmp").setup()
       end
