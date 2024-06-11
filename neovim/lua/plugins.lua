@@ -67,6 +67,15 @@ function M.setup()
       end,
     }
 
+    use {'airblade/vim-gitgutter'}
+
+    use {
+      "f-person/git-blame.nvim",
+      config = function()
+        require("gitblame").setup()
+      end,
+    }
+
     use {
         'cameron-wags/rainbow_csv.nvim',
         config = function()
