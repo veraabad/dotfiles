@@ -21,7 +21,7 @@ function M.highlight(client)
       if present then
         illuminate.on_attach(client)
       else
-        vim.api.nvim_exec(
+        vim.cmd(
           [[
             augroup lsp_document_highlight
               autocmd! * <buffer>
