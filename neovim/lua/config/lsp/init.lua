@@ -3,7 +3,7 @@ local M = {}
 -- Setup LSP handlers
 require("config.lsp.handlers").setup()
 
-function custom_clangd_setup()
+local custom_clangd_setup = function()
   require('lspconfig').clangd.setup({
     cmd = {"/opt/homebrew/opt/llvm/bin/clangd", "--background-index", "-j=8", "--limit-references=0", "--limit-results=0", "--log=verbose"},
     capabilities = {
@@ -28,27 +28,41 @@ function custom_clangd_setup()
   })
 end
 
-function custom_pyright_setup()
+local custom_pyright_setup = function()
   require('lspconfig').pyright.setup({
     settings = {
-      python = {
-        analysis = {
-          typeCheckingMode = "basic",
-        },
-      },
+      -- python = {
+      --   analysis = {
+      --     typeCheckingMode = "basic",
+      --   },
+      -- },
       pyright = {
-        disableOrganizeImports = false,
+        disableOrganizeImports = true,
       },
     },
   })
 end
 
-function custom_ruff_setup()
+local custom_ruff_setup = function()
   require('lspconfig').ruff.setup({
+    enabled = PLUGINS.ruff_opt == "ruff",
     on_attach = function(client, bufnr)
       -- Defer hover functionality to Pyright
-      if client.resolved_capabilities ~= nil then
-        client.resolved_capabilities.hover = false
+      if client.name == "ruff" then
+        client.server_capabilities.hoverProvider = false
+        client.server_capabilities.documentHighlightProvider = false
+      end
+    end,
+  })
+end
+
+local custom_ruff_lsp_setup = function()
+  require('lspconfig').ruff_lsp.setup({
+    enabled = PLUGINS.ruff_opt == "ruff_lsp",
+    on_attach = function(client, bufnr)
+      -- Defer hover functionality to Pyright
+      if client.name == "ruff_lsp" then
+        client.server_capabilities.hoverProvider = false
       end
     end,
   })
@@ -62,7 +76,9 @@ function M.setup()
     require('config.lsp.keymaps').setup(client, bufnr)
 
     -- Configure highlighting
-    require("config.lsp.highlighting").setup(client)
+    if client.name ~= "ruff" then  -- Exclude Ruff from highlighting
+      require("config.lsp.highlighting").setup(client)
+    end
   end)
 
   -- to learn how to use mason.nvim with lsp-zero
@@ -75,6 +91,7 @@ function M.setup()
       clangd = custom_clangd_setup,
       pyright = custom_pyright_setup,
       ruff = custom_ruff_setup,
+      ruff_lsp = custom_ruff_lsp_setup,
     },
   })
   local lua_opts = lsp_zero.nvim_lua_ls()
