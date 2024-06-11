@@ -27,6 +27,7 @@ function M.find_files()
 	if not ok then
 		telescope.find_files(opts)
 	end
+end
 
 -- Find dotfiles
 function M.find_dotfiles()
@@ -47,6 +48,5 @@ end
   -- else
   --   fzf.files()
   -- end
-end
 
 return M
