@@ -29,6 +29,14 @@ function M.find_files()
 	end
 end
 
+function M.find_functions()
+  local opts = {
+    ignore_symbols = {"variable"},
+  }
+  local telescope = require "telescope.builtin"
+  telescope.lsp_document_symbols(opts)
+end
+
 -- Find dotfiles
 function M.find_dotfiles()
   require("telescope.builtin").find_files {

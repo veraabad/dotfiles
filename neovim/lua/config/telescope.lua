@@ -55,7 +55,7 @@ function M.setup()
       :sync()
   end
 
-  telescope.setup {
+  local telescope_setup = {
     defaults = {
       buffer_previewer_maker = preview_maker,
       mappings = {
@@ -92,6 +92,7 @@ function M.setup()
       },
     },
   }
+  telescope.setup(telescope_setup)
 
   telescope.load_extension "fzf"
   telescope.load_extension "project" -- telescope-project.nvim
