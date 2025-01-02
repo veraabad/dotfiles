@@ -298,8 +298,8 @@ function M.setup()
     -- Completion
     use {
       "hrsh7th/nvim-cmp",
-      -- event = "InsertEnter",
-      event = "VimEnter",
+      event = "InsertEnter",
+      -- event = "VimEnter",
       opt = true,
       config = function()
         require("config.cmp").setup()
@@ -388,7 +388,7 @@ function M.setup()
 
      use {
        'CopilotC-Nvim/CopilotChat.nvim',
-       branch = 'canary',
+       branch = 'main',
        event = "VimEnter",
        requires = {
          { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim

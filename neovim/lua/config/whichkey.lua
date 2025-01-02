@@ -4,79 +4,55 @@ function M.setup()
   local whichkey = require "which-key"
 
   local conf = {
-    window = {
+    win = {
       border = "single", -- none, single, double, shadow
-      position = "bottom", -- bottom, top
+      -- position = "bottom", -- bottom, top
     },
-  }
-
-  local opts = {
-    mode = "n", -- Normal mode
-    prefix = "<leader>",
-    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-    silent = true, -- use `silent` when creating keymaps
-    noremap = true, -- use `noremap` when creating keymaps
-    nowait = false, -- use `nowait` when creating keymaps
   }
 
   local mappings = {
-    ["w"] = { "<cmd>update!<CR>", "Save" },
-    ["q"] = { "<cmd>q!<CR>", "Quit" },
+    { "<leader>b", group = "Buffer", nowait = false, remap = false },
+    { "<leader>bD", "<Cmd>%bd|e#|bd#<Cr>", desc = "Delete all buffers", nowait = false, remap = false },
+    { "<leader>bc", "<Cmd>bd!<Cr>", desc = "Close current buffer", nowait = false, remap = false },
 
-    b = {
-      name = "Buffer",
-      c = { "<Cmd>bd!<Cr>", "Close current buffer" },
-      D = { "<Cmd>%bd|e#|bd#<Cr>", "Delete all buffers" },
-		},
+    { "<leader>f", group = "Find", nowait = false, remap = false },
+    { "<leader>fa", "<cmd>lua require('utils.finder').find_functions()<cr>", desc = "Find Functions", nowait = false, remap = false },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers", nowait = false, remap = false },
+    { "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Commands", nowait = false, remap = false },
+    { "<leader>fd", "<cmd>lua require('utils.finder').find_dotfiles()<cr>", desc = "Dotfiles", nowait = false, remap = false },
+    { "<leader>fe", "<cmd>NvimTreeToggle<cr>", desc = "Explorer", nowait = false, remap = false },
+    { "<leader>ff", "<cmd>lua require('utils.finder').find_files()<cr>", desc = "Files", nowait = false, remap = false },
+    { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep", nowait = false, remap = false },
+    { "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Old Files", nowait = false, remap = false },
+    { "<leader>fr", "<cmd>Telescope file_browser<cr>", desc = "Browser", nowait = false, remap = false },
+    { "<leader>fs", "<cmd>lua require('utils.finder').open_ssh_config()<cr>", desc = "SSH Config", nowait = false, remap = false },
+    { "<leader>fw", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Current Buffer", nowait = false, remap = false },
 
-    f = {
-      name = "Find",
-      f = { "<cmd>lua require('utils.finder').find_files()<cr>", "Files" },
-      d = { "<cmd>lua require('utils.finder').find_dotfiles()<cr>", "Dotfiles" },
-      s = { "<cmd>lua require('utils.finder').open_ssh_config()<cr>", "SSH Config" },
-      a = { "<cmd>lua require('utils.finder').find_functions()<cr>", "Find Functions" },
-      b = { "<cmd>Telescope buffers<cr>", "Buffers" },
-      o = { "<cmd>Telescope oldfiles<cr>", "Old Files" },
-      g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
-      c = { "<cmd>Telescope commands<cr>", "Commands" },
-      r = { "<cmd>Telescope file_browser<cr>", "Browser" },
-      w = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current Buffer" },
-      e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-		},
+    { "<leader>g", group = "Git", nowait = false, remap = false },
+    { "<leader>gs", "<cmd>Neogit<CR>", desc = "Status", nowait = false, remap = false },
 
-		p = {
-      name = "Project",
-      p = { "<cmd>lua require'telescope'.extensions.project.project{}<cr>", "List" },
-      s = { "<cmd>Telescope repo list<cr>", "Search" },
-    },
+    { "<leader>p", group = "Project", nowait = false, remap = false },
+    { "<leader>pp", "<cmd>lua require'telescope'.extensions.project.project{}<cr>", desc = "List", nowait = false, remap = false },
+    { "<leader>ps", "<cmd>Telescope repo list<cr>", desc = "Search", nowait = false, remap = false },
 
-		-- f = {
-		-- 	name = "Find",
-		-- 	f = { "<cmd>lua require('utils.finder').find_files()<cr>", "Files" },
-		-- 	b = { "<cmd>FzfLua buffers<cr>", "Buffers" },
-		-- 	o = { "<cmd>FzfLua oldfiles<cr>", "Old files" },
-		-- 	g = { "<cmd>FzfLua live_grep<cr>", "Live grep" },
-		-- 	c = { "<cmd>FzfLua commands<cr>", "Commands" },
-		-- 	e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-		-- },
+    { "<leader>q", "<cmd>q!<CR>", desc = "Quit", nowait = false, remap = false },
+    { "<leader>w", "<cmd>update!<CR>", desc = "Save", nowait = false, remap = false },
 
-    z = {
-      name = "Packer",
-      c = { "<cmd>PackerCompile<cr>", "Compile" },
-      i = { "<cmd>PackerInstall<cr>", "Install" },
-      s = { "<cmd>PackerSync<cr>", "Sync" },
-      S = { "<cmd>PackerStatus<cr>", "Status" },
-      u = { "<cmd>PackerUpdate<cr>", "Update" },
-    },
-
-    g = {
-      name = "Git",
-      s = { "<cmd>Neogit<CR>", "Status" },
-    },
+    { "<leader>z", group = "Packer", nowait = false, remap = false },
+    { "<leader>zS", "<cmd>PackerStatus<cr>", desc = "Status", nowait = false, remap = false },
+    { "<leader>zc", "<cmd>PackerCompile<cr>", desc = "Compile", nowait = false, remap = false },
+    { "<leader>zi", "<cmd>PackerInstall<cr>", desc = "Install", nowait = false, remap = false },
+    { "<leader>zs", "<cmd>PackerSync<cr>", desc = "Sync", nowait = false, remap = false },
+    { "<leader>zu", "<cmd>PackerUpdate<cr>", desc = "Update", nowait = false, remap = false },
+    mode = "n",
+    prefix = "<leader>",
+    silent = true,
+    nowait = false,
+    noremap = true,
   }
 
   whichkey.setup(conf)
-  whichkey.register(mappings, opts)
+  whichkey.add(mappings)
 end
 
 return M

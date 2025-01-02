@@ -22,29 +22,35 @@ function M.setup(client, bufnr)
   keymap("n", "]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
 
   -- Whichkey
-  local keymap_l = {
-    l = {
-      name = "Code",
-      r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
-      a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
-      d = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Line Diagnostics" },
-      i = { "<cmd>LspInfo<CR>", "Lsp Info" },
-    },
+  local lsp_mappings = {
+    { "<leader>l", group = "Code"},
+    { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "Rename"},
+    { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", desc = "Code Action"},
+    { "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", desc = "Line Diagnostics"},
+    { "<leader>li", "<cmd>LspInfo<CR>", desc = "Lsp Info"},
+    prefix = "<leader>",
+    nowait = false,
+    noremap = true,
+    buffer = bufnr,
   }
   if client.server_capabilities.documentFormattingProvider then
-    keymap_l.l.f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format Document" }
+    table.insert(lsp_mappings, { "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", desc = "Format Document"})
   end
 
   local keymap_g = {
-    name = "Goto",
-    d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
-    D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
-    s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
-    I = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
-    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
+    { "g", group = "Goto"},
+    { "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", desc = "Definition"},
+    { "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", desc = "Declaration"},
+    { "gs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", desc = "Signature Help"},
+    { "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "Goto Implementation"},
+    { "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", desc = "Goto Type Definition"},
+    prefix = "g",
+    buffer = bufnr,
+    nowait = false,
+    noremap = true,
   }
-  whichkey.register(keymap_l, { buffer = bufnr, prefix = "<leader>" })
-  whichkey.register(keymap_g, { buffer = bufnr, prefix = "g" })
+  whichkey.add(lsp_mappings)
+  whichkey.add(keymap_g)
 end
 
 -- function M.setup(client, bufnr)
