@@ -365,39 +365,41 @@ function M.setup()
     }
 
     -- Copilot
-    use {
-      "zbirenbaum/copilot-cmp",
-      after = { "copilot.lua" },
-      -- after = { "copilot.lua", "nvim-cmp" },
-      config = function ()
-        require("copilot_cmp").setup()
-      end
-    }
+    if PLUGINS.copilot.enabled then
+      use {
+        "zbirenbaum/copilot-cmp",
+        after = { "copilot.lua" },
+        -- after = { "copilot.lua", "nvim-cmp" },
+        config = function ()
+          require("copilot_cmp").setup()
+        end
+      }
 
-    use {
-      "zbirenbaum/copilot.lua",
-      cmd = "Copilot",
-      event = "VimEnter",
-      config = function()
-        require("copilot").setup({
-          panel = { enabled = false },
-          sugggestion = { enabled = false },
-      })
-      end,
-     }
+      use {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "VimEnter",
+        config = function()
+          require("copilot").setup({
+            panel = { enabled = false },
+            sugggestion = { enabled = false },
+          })
+        end,
+      }
 
-     use {
-       'CopilotC-Nvim/CopilotChat.nvim',
-       branch = 'main',
-       event = "VimEnter",
-       requires = {
-         { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-         { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-       },
-       config = function()
-         require("config.copilotChat").setup()
-       end,
-     }
+      use {
+        'CopilotC-Nvim/CopilotChat.nvim',
+        branch = 'main',
+        event = "VimEnter",
+        requires = {
+          { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+          { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+        },
+        config = function()
+          require("config.copilotChat").setup()
+        end,
+      }
+    end
 
     if packer_bootstrap then
       print "Restart Neovim required after installation!"
