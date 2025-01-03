@@ -305,7 +305,13 @@ function M.setup()
         require("config.cmp").setup()
       end,
       wants = { "LuaSnip" },
-      requires = {
+      requires = vim.tbl_filter(function(plugin)
+          -- Check if the plugin is 'zbinrenbaum/copilot-cmp' and whehter PLUGINS.copilot.enabled is true
+          if type(plugin) == "string" and plugin == "zbirenbaum/copilot-cmp" then
+            return PLUGINS.copilot.enabled
+          end
+          return true
+        end, {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lua",
@@ -324,8 +330,7 @@ function M.setup()
           end,
         },
         "rafamadriz/friendly-snippets",
-        disable = false,
-      },
+      }),
     }
 
     -- Auto pairs
