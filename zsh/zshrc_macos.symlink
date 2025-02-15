@@ -76,6 +76,9 @@ export LANG=en_US.UTF-8
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+# Load rust
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
 # Load any local customization
 [ -f ~/.zshrc.local ] && . ~/.zshrc.local
 
