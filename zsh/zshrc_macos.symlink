@@ -48,7 +48,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-alias ls='eza --group-directories-first --icons'
+alias ls='eza --icons --group-directories-first'
 alias lc='eza --tree'
 alias dl='diskutil list'
 alias dk_ej_2='diskutil eject /dev/disk2'
