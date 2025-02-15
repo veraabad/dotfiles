@@ -3,7 +3,7 @@ PLUGINS = {
     enabled = true,
   },
   copilot = {
-    enabled = true,
+    enabled = false,
   },
   ruff_opt = "ruff" -- Available option is 'ruff_lsp'
 }
