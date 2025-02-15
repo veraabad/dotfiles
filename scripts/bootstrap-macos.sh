@@ -43,6 +43,7 @@ setup_gitconfig() {
 
         git config --global user.name "$user_name"
         git config --global user.email "$user_email"
+	git config --global core.editor "NVIM_APPNAME=nvb nvim -f"
     elif [ "$(git config --global --get dotfiles.managed)" != "true" ]; then
         # if user.email exists, let's check for dotfiles.managed config. If it is
         # not true, we'll backup the gitconfig file and set previous user.email and

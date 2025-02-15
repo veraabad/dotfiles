@@ -59,9 +59,7 @@ zstyle ':notify:*' success-title "Command finished (in #{time_elapsed} seconds)"
 zstyle ':notify:*' command-complete-timeout 15
 
 # Neovim configuration
-NVIM_CUSTOM=~/.config/nvim-custom
-export NVIM_CUSTOM
-alias nvb='XDG_DATA_HOME=$NVIM_CUSTOM/share XDG_CONFIG_HOME=$NVIM_CUSTOM nvim'
+alias nvb="NVIM_APPNAME=nvb nvim"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -117,6 +115,18 @@ caffeinate-on-process() {
     fi
     echo "caffeinate -w ${PROCESSS_PID} ${DISPLAY_ON}"
     caffeinate -w ${PROCESSS_PID} ${DISPLAY_ON} &
+}
+
+nvims() {
+  items=("default" "nvb" "AstroNvim")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
 }
 
 update-omz-custom-plugins() {

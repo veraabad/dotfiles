@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-NVIM_CUSTOM=~/.config/nvim-custom
-export NVIM_CUSTOM
+NVIM_DIR=~/.config/nvb
+export NVIM_DIR
 
-rm -rf $NVIM_CUSTOM
+rm -rf $NVIM_DIR
 
-mkdir -p $NVIM_CUSTOM/share
-mkdir -p $NVIM_CUSTOM/nvim
+mkdir -p $NVIM_DIR
 
-stow --restow --target="$NVIM_CUSTOM/nvim" -d "$DOTFILES_DIR" neovim
+stow --restow --target="$NVIM_DIR" -d "$DOTFILES_DIR" neovim
