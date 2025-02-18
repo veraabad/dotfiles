@@ -22,32 +22,24 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 require('lazy').setup({
+  spec = {
+    -- import your plugins
+    { import = "plugins" },
+  },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  install = { colorscheme = { "tanvirtin/monokai.nvim" } },
+  -- automatically check for plugin updates
+  checker = { enabled = false },
+
   -- Colorscheme
-  {
-    "tanvirtin/monokai.nvim",
-    config = function()
-      require('monokai').setup()
-      -- require('monokai').setup { palette = require('monokai').ristretto }
-    end,
-  },
-
-  -- Startup screen
-  {
-    "goolord/alpha-nvim",
-    config = function()
-      require("plugins.alpha").setup()
-    end,
-  },
-
-  -- Git
-  {
-    "TimUntersberger/neogit",
-    cmd = "Neogit",
-    dependencies = "nvim-lua/plenary.nvim",
-    config = function()
-      require("plugins.neogit").setup()
-    end,
-  },
+  -- {
+  --   "tanvirtin/monokai.nvim",
+  --   config = function()
+  --     require('monokai').setup()
+  --     -- require('monokai').setup { palette = require('monokai').ristretto }
+  --   end,
+  -- },
 
   {'airblade/vim-gitgutter'},
 
@@ -77,23 +69,6 @@ require('lazy').setup({
           'rfc_csv',
           'rfc_semicolon'
       }
-  },
-
-  -- Trim whitespace
-  {
-    "cappyzawa/trim.nvim",
-    config = function()
-      require("plugins.trim").setup()
-    end
-  },
-
-  -- WhichKey
-  {
-      "folke/which-key.nvim",
-      event = "VimEnter",
-      config = function()
-        require("plugins.whichkey").setup()
-      end,
   },
 
   -- IndentLine

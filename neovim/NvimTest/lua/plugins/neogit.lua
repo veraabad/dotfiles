@@ -1,12 +1,10 @@
-local M = {}
-
-function M.setup()
-  local status_ok, neogit = pcall(require, "neogit")
-  if not status_ok then
-    return
-  end
-
-  neogit.setup {}
-end
-
-return M
+-- Git
+return {
+  "NeogitOrg/neogit",
+  dependencies = {
+    "nvim-lua/plenary.nvim",         -- required
+    "sindrets/diffview.nvim",        -- optional - Diff integration
+    "nvim-telescope/telescope.nvim", -- optional
+  },
+  config = true
+}
