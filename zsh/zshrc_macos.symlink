@@ -60,6 +60,7 @@ zstyle ':notify:*' command-complete-timeout 15
 
 # Neovim configuration
 alias nvb="NVIM_APPNAME=nvb nvim"
+alias NvimTest="NVIM_APPNAME=NvimTest nvim"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -118,7 +119,7 @@ caffeinate-on-process() {
 }
 
 nvims() {
-  items=("default" "nvb" "AstroNvim")
+  items=("default" "nvb" "AstroNvim", "NvimTest")
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
   if [[ -z $config ]]; then
     echo "Nothing selected"
