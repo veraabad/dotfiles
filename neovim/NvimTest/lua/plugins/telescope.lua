@@ -1,4 +1,4 @@
-local M = {}
+-- Telescope
 
 -- Custom actions
 local transform_mod = require("telescope.actions.mt").transform_mod
@@ -17,88 +17,116 @@ local nvb_actions = transform_mod {
   end,
 }
 
-function M.setup()
-  local actions = require "telescope.actions"
-  local telescope = require "telescope"
+return {
+  "nvim-telescope/telescope.nvim",
+  opt = true,
+  config = function()
+    local actions = require "telescope.actions"
+    local telescope = require "telescope"
 
-  -- Custom previewer
-  local previewers = require "telescope.previewers"
-  local Job = require "plenary.job"
-  local preview_maker = function(filepath, bufnr, opts)
-    filepath = vim.fn.expand(filepath)
-    Job
-      :new({
-        command = "file",
-        args = { "--mime-type", "-b", filepath },
-        on_exit = function(j)
-          local mime_type = vim.split(j:result()[1], "/")[1]
+    -- Custom previewer
+    local previewers = require "telescope.previewers"
+    local Job = require "plenary.job"
+    local preview_maker = function(filepath, bufnr, opts)
+      filepath = vim.fn.expand(filepath)
+      Job
+        :new({
+          command = "file",
+          args = { "--mime-type", "-b", filepath },
+          on_exit = function(j)
+            local mime_type = vim.split(j:result()[1], "/")[1]
 
-          if mime_type == "text" then
-            -- Check file size
-            vim.loop.fs_stat(filepath, function(_, stat)
-              if not stat then
-                return
-              end
-              if stat.size > 500000 then
-                return
-              else
-                previewers.buffer_previewer_maker(filepath, bufnr, opts)
-              end
-            end)
-          else
-            vim.schedule(function()
-              vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY FILE" })
-            end)
-          end
-        end,
-      })
-      :sync()
-  end
+            if mime_type == "text" then
+              -- Check file size
+              vim.loop.fs_stat(filepath, function(_, stat)
+                if not stat then
+                  return
+                end
+                if stat.size > 500000 then
+                  return
+                else
+                  previewers.buffer_previewer_maker(filepath, bufnr, opts)
+                end
+              end)
+            else
+              vim.schedule(function()
+                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY FILE" })
+              end)
+            end
+          end,
+        })
+        :sync()
+    end
 
-  local telescope_setup = {
-    defaults = {
-      buffer_previewer_maker = preview_maker,
-      mappings = {
-        i = {
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-          ["<C-n>"] = actions.cycle_history_next,
-          ["<C-p>"] = actions.cycle_history_prev,
-        },
-      },
-    },
-    pickers = {
-      find_files = {
-        theme = "ivy",
+    local telescope_setup = {
+      defaults = {
+        buffer_previewer_maker = preview_maker,
         mappings = {
-          n = {
-            ["y"] = nvb_actions.file_path,
-          },
           i = {
-            ["<C-y>"] = nvb_actions.file_path,
+            ["<C-j>"] = actions.move_selection_next,
+            ["<C-k>"] = actions.move_selection_previous,
+            ["<C-n>"] = actions.cycle_history_next,
+            ["<C-p>"] = actions.cycle_history_prev,
           },
         },
       },
-      git_files = {
-        theme = "dropdown",
-        mappings = {
-          n = {
-            ["y"] = nvb_actions.file_path,
+      pickers = {
+        find_files = {
+          theme = "ivy",
+          mappings = {
+            n = {
+              ["y"] = nvb_actions.file_path,
+            },
+            i = {
+              ["<C-y>"] = nvb_actions.file_path,
+            },
           },
-          i = {
-            ["<C-y>"] = nvb_actions.file_path,
+        },
+        git_files = {
+          theme = "dropdown",
+          mappings = {
+            n = {
+              ["y"] = nvb_actions.file_path,
+            },
+            i = {
+              ["<C-y>"] = nvb_actions.file_path,
+            },
           },
         },
       },
+    }
+    telescope.setup(telescope_setup)
+
+    telescope.load_extension "fzf"
+    telescope.load_extension "project" -- telescope-project.nvim
+    telescope.load_extension "repo"
+    telescope.load_extension "file_browser"
+    telescope.load_extension "projects" -- project.nvim
+  end,
+  cmd = { "Telescope" },
+  module = "telescope",
+  keys = { "<leader>f", "<leader>p" },
+  wants = {
+    "plenary.nvim",
+    "popup.nvim",
+    "telescope-fzf-native.nvim",
+    "telescope-project.nvim",
+    "telescope-repo.nvim",
+    "telescope-file-browser.nvim",
+    "project.nvim",
+  },
+  dependencies = {
+    "nvim-lua/popup.nvim",
+    "nvim-lua/plenary.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "nvim-telescope/telescope-project.nvim",
+    "cljoly/telescope-repo.nvim",
+    "nvim-telescope/telescope-file-browser.nvim",
+    {
+      "ahmedkhalf/project.nvim",
+      config = function()
+        require("project_nvim").setup {}
+      end,
     },
-  }
-  telescope.setup(telescope_setup)
-
-  telescope.load_extension "fzf"
-  telescope.load_extension "project" -- telescope-project.nvim
-  telescope.load_extension "repo"
-  telescope.load_extension "file_browser"
-  telescope.load_extension "projects" -- project.nvim
-end
-
-return M
+  },
+}

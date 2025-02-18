@@ -4,11 +4,11 @@ return {
   dependencies = {
     "kyazdani42/nvim-web-devicons",
   },
-  config = function()_
-    -- local status_ok, alpha = pcall(require, "alpha")
-    -- if not status_ok then
-    --   return
-    -- end
+  config = function()
+    local status_ok, alpha = pcall(require, "alpha")
+    if not status_ok then
+      return
+    end
 
     local dashboard = require "alpha.themes.dashboard"
     local function header()
@@ -43,7 +43,7 @@ return {
 
     local function footer()
       -- Number of plugins
-      local total_plugins = #vim.tbl_keys(packer_plugins)
+      local total_plugins = #vim.tbl_keys(require("lazy").plugins())
       local datetime = os.date "%d-%m-%Y  %H:%M:%S"
       local plugins_text = "\t" .. total_plugins .. " plugins  " .. datetime
 
