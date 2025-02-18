@@ -35,7 +35,7 @@ require('lazy').setup({
   {
     "goolord/alpha-nvim",
     config = function()
-      require("config.alpha").setup()
+      require("plugins.alpha").setup()
     end,
   },
 
@@ -45,7 +45,7 @@ require('lazy').setup({
     cmd = "Neogit",
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
-      require("config.neogit").setup()
+      require("plugins.neogit").setup()
     end,
   },
 
@@ -83,7 +83,7 @@ require('lazy').setup({
   {
     "cappyzawa/trim.nvim",
     config = function()
-      require("config.trim").setup()
+      require("plugins.trim").setup()
     end
   },
 
@@ -92,7 +92,7 @@ require('lazy').setup({
       "folke/which-key.nvim",
       event = "VimEnter",
       config = function()
-        require("config.whichkey").setup()
+        require("plugins.whichkey").setup()
       end,
   },
 
@@ -101,7 +101,7 @@ require('lazy').setup({
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPre",
     config = function()
-      require("config.indentblankline").setup()
+      require("plugins.indentblankline").setup()
     end,
   },
 
@@ -161,7 +161,7 @@ require('lazy').setup({
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     config = function()
-      require("config.lualine").setup()
+      require("plugins.lualine").setup()
     end,
     dependencies = { "nvim-web-devicons" },
   },
@@ -179,7 +179,7 @@ require('lazy').setup({
     opt = true,
     event = "BufRead",
     config = function()
-      require("config.treesitter").setup()
+      require("plugins.treesitter").setup()
     end,
     dependencies = {
       {"tanvirtin/monokai.nvim"},
@@ -202,7 +202,7 @@ require('lazy').setup({
     "nvim-telescope/telescope.nvim",
     opt = true,
     config = function()
-      require("config.telescope").setup()
+      require("plugins.telescope").setup()
     end,
     cmd = { "Telescope" },
     module = "telescope",
@@ -243,7 +243,7 @@ require('lazy').setup({
     },
     cmd = { "NvimTreeToggle", "NvimTreeClose" },
       config = function()
-        require("config.nvimtree").setup()
+        require("plugins.nvimtree").setup()
       end,
   },
 
@@ -266,7 +266,7 @@ require('lazy').setup({
     event = "BufReadPre",
     wants = "nvim-web-devicons",
     config = function()
-      require("config.bufferline").setup()
+      require("plugins.bufferline").setup()
     end,
   },
 
@@ -277,20 +277,14 @@ require('lazy').setup({
     -- event = "VimEnter",
     opt = true,
     config = function()
-      require("config.cmp").setup()
+      require("plugins.cmp").setup()
     end,
     wants = { "LuaSnip" },
-    dependencies = vim.tbl_filter(function(plugin)
-        -- Check if the plugin is 'zbinrenbaum/copilot-cmp' and whehter PLUGINS.copilot.enabled is true
-        if type(plugin) == "string" and plugin == "zbirenbaum/copilot-cmp" then
-          return PLUGINS.copilot.enabled
-        end
-        return true
-      end, {
+    dependencies = {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
-      "zbirenbaum/copilot-cmp",
+      -- "zbirenbaum/copilot-cmp",
       "ray-x/cmp-treesitter",
       "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
@@ -301,11 +295,20 @@ require('lazy').setup({
         "L3MON4D3/LuaSnip",
         wants = "friendly-snippets",
         config = function()
-          require("config.luasnip").setup()
+          require("plugins.luasnip").setup()
         end,
       },
       "rafamadriz/friendly-snippets",
-    }),
+    },
+    -- dependencies = vim.tbl_filter(function(plugin)
+        -- TODO: fix this
+        -- Check if the plugin is 'zbinrenbaum/copilot-cmp' and whehter PLUGINS.copilot.enabled is true
+        -- if type(plugin) == "string" and plugin == "zbirenbaum/copilot-cmp" then
+        --   return PLUGINS.copilot.enabled
+        -- end
+        -- return true
+      -- end, 
+    -- }),
   },
 
   -- Auto pairs
@@ -314,7 +317,7 @@ require('lazy').setup({
     wants = "nvim-treesitter",
     module = { "nvim-autopairs.completion.cmp", "nvim-autopairs" },
     config = function()
-      require("config.autopairs").setup()
+      require("plugins.autopairs").setup()
     end,
   },
 
@@ -340,7 +343,7 @@ require('lazy').setup({
       {"RRethy/vim-illuminate"},
     },
     config = function()
-      require("config.lsp").setup()
+      require("plugins.lsp").setup()
     end,
   },
 
@@ -378,7 +381,7 @@ require('lazy').setup({
   --       { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
   --     },
   --     config = function()
-  --       require("config.copilotChat").setup()
+  --       require("plugins.copilotChat").setup()
   --     end,
   --   },
   -- end
