@@ -81,7 +81,9 @@ return {
       sorting = {
         priority_weight = 2,
         comparators = {
-          require("copilot_cmp.comparators").prioritize,
+          -- TODO: add conditional for this 
+          -- require("copilot_cmp.comparators").prioritize,
+
           -- Below is the default comparitor list and order for nvim-cmp
           cmp.config.compare.offset,
           -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
@@ -145,13 +147,7 @@ return {
     "hrsh7th/cmp-calc",
     "f3fora/cmp-spell",
     "hrsh7th/cmp-emoji",
-    {
-      "L3MON4D3/LuaSnip",
-      dependencies = { "friendly-snippets" },
-      config = function()
-        require("plugins.luasnip").setup()
-      end,
-    },
+    "L3MON4D3/LuaSnip",
     "rafamadriz/friendly-snippets",
   },
   -- dependencies = vim.tbl_filter(function(plugin)

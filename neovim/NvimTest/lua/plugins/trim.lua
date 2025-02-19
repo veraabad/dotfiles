@@ -2,7 +2,7 @@
 return {
   {
     "cappyzawa/trim.nvim",
-    config = {
+    opt = {
 			ft_blocklist = {},
 			patterns = {},
 			trim_on_write = true,

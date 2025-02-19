@@ -25,21 +25,13 @@ require('lazy').setup({
   spec = {
     -- import your plugins
     { import = "plugins" },
+    { "tanvirtin/monokai.nvim" },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "tanvirtin/monokai.nvim" } },
+  install = { colorscheme = { "monokai" } },
   -- automatically check for plugin updates
   checker = { enabled = false },
-
-  -- Colorscheme
-  -- {
-  --   "tanvirtin/monokai.nvim",
-  --   config = function()
-  --     require('monokai').setup()
-  --     -- require('monokai').setup { palette = require('monokai').ristretto }
-  --   end,
-  -- },
 
   {'airblade/vim-gitgutter'},
 
