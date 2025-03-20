@@ -13,3 +13,7 @@ curl
 ranger
 jq
 net-tools
+neovim
+stow
+gcc
+g++
