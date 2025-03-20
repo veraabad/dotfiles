@@ -21,8 +21,8 @@ sudo apt-get update
 < ./$SCRIPT_DIR/apt-get-list-linux.txt xargs sudo apt-get install -y
 
 # Install colorls
-sudo chown -R ${USER}:${USER} "/var/lib/gems/"
-sudo gem install colorls
+# sudo chown -R ${USER}:${USER} "/var/lib/gems/"
+# sudo gem install colorls
 
 # Update locale
 # sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
@@ -43,3 +43,4 @@ install_dotfiles -l
 
 # Set zsh as the default
 check_default_shell
+run_install -a
