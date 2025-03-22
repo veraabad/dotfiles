@@ -17,3 +17,10 @@ neovim
 stow
 gcc
 g++
+fzf
+eza
+ripgrep
+nodejs
+npm
+golang-go
+qterminal
