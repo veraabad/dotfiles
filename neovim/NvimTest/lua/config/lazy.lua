@@ -26,6 +26,67 @@ require('lazy').setup({
     -- import your plugins
     { import = "plugins" },
     { "tanvirtin/monokai.nvim" },
+    {'airblade/vim-gitgutter'},
+
+    {
+      "f-person/git-blame.nvim",
+      config = function()
+        require("gitblame").setup()
+      end,
+    },
+
+    {
+        'cameron-wags/rainbow_csv.nvim',
+        config = function()
+            require 'rainbow_csv'.setup()
+        end,
+        -- optional lazy-loading below
+        module = {
+            'rainbow_csv',
+            'rainbow_csv.fns'
+        },
+        ft = {
+            'csv',
+            'tsv',
+            'csv_semicolon',
+            'csv_whitespace',
+            'csv_pipe',
+            'rfc_csv',
+            'rfc_semicolon'
+        }
+    },
+
+    -- Load only when require
+    { "nvim-lua/plenary.nvim", module = "plenary" },
+
+    -- Better icons
+    {
+      "kyazdani42/nvim-web-devicons",
+      config = function()
+        require("nvim-web-devicons").setup { default = true }
+      end,
+    },
+
+    -- Better Comment
+    {
+      "numToStr/Comment.nvim",
+      opt = true,
+      keys = { "gc", "gcc", "gbc" },
+      config = function()
+        require("Comment").setup {}
+      end,
+    },
+
+    -- Markdown
+    {
+      "iamcco/markdown-preview.nvim",
+      cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+      build = "cd app && npm install",
+      init = function()
+        vim.g.mkdp_filetypes = { "markdown" }
+      end,
+      ft = { "markdown" },
+    },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -33,65 +94,4 @@ require('lazy').setup({
   -- automatically check for plugin updates
   checker = { enabled = false },
 
-  {'airblade/vim-gitgutter'},
-
-  {
-    "f-person/git-blame.nvim",
-    config = function()
-      require("gitblame").setup()
-    end,
-  },
-
-  {
-      'cameron-wags/rainbow_csv.nvim',
-      config = function()
-          require 'rainbow_csv'.setup()
-      end,
-      -- optional lazy-loading below
-      module = {
-          'rainbow_csv',
-          'rainbow_csv.fns'
-      },
-      ft = {
-          'csv',
-          'tsv',
-          'csv_semicolon',
-          'csv_whitespace',
-          'csv_pipe',
-          'rfc_csv',
-          'rfc_semicolon'
-      }
-  },
-
-  -- Load only when require
-  { "nvim-lua/plenary.nvim", module = "plenary" },
-
-  -- Better icons
-  {
-    "kyazdani42/nvim-web-devicons",
-    config = function()
-      require("nvim-web-devicons").setup { default = true }
-    end,
-  },
-
-  -- Better Comment
-  {
-    "numToStr/Comment.nvim",
-    opt = true,
-    keys = { "gc", "gcc", "gbc" },
-    config = function()
-      require("Comment").setup {}
-    end,
-  },
-
-  -- Markdown
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && npm install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-    end,
-    ft = { "markdown" },
-  },
 })
