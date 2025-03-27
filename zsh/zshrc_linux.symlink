@@ -56,7 +56,7 @@ eval "$(starship init zsh)"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='NVIM_APPNAME=nvb nvim'
 else
-  export EDITOR='NVIM_APPNAME=nvb nvim'
+  export EDITOR='NVIM_APPNAME=NvimTest nvim'
 fi
 
 # Symlink ssh-agent for use in tmux
@@ -86,9 +86,13 @@ nvims() {
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
+
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
+  # eval "$(pyenv init --path)"
+  eval "$(pyenv init - zsh)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
+# Add to ~/.zprofile
+# eval `keychain --agents ssh --eval`

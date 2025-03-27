@@ -144,7 +144,7 @@ run_install() {
 }
 
 install_pyenv_linux() {
-    curl https://pyenv.run | bash
+    curl -fsSL https://pyenv.run | bash
 }
 
 install_starship_linux() {
