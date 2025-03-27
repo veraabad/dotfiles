@@ -24,3 +24,6 @@ nodejs
 npm
 golang-go
 qterminal
+keychain
+xclip
+wl-clipboard
