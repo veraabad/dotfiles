@@ -49,18 +49,18 @@ local custom_pyright_setup = function()
   })
 end
 
-local custom_ruff_setup = function()
-  require('lspconfig').ruff.setup({
-    enabled = PLUGINS.ruff_opt == "ruff",
-    on_attach = function(client, bufnr)
-      -- Defer hover functionality to Pyright
-      if client.name == "ruff" then
-        client.server_capabilities.hoverProvider = false
-        client.server_capabilities.documentHighlightProvider = false
-      end
-    end,
-  })
-end
+-- local custom_ruff_setup = function()
+--   require('lspconfig').ruff.setup({
+--     enabled = PLUGINS.ruff_opt == "ruff",
+--     on_attach = function(client, bufnr)
+--       -- Defer hover functionality to Pyright
+--       if client.name == "ruff" then
+--         client.server_capabilities.hoverProvider = false
+--         client.server_capabilities.documentHighlightProvider = false
+--       end
+--     end,
+--   })
+-- end
 
 return {
   'VonHeikemen/lsp-zero.nvim',
@@ -104,7 +104,7 @@ return {
         lsp_zero.default_setup,
         clangd = custom_clangd_setup,
         pyright = custom_pyright_setup,
-        ruff = custom_ruff_setup,
+        -- ruff = custom_ruff_setup,
       },
     })
     local lua_opts = lsp_zero.nvim_lua_ls()
