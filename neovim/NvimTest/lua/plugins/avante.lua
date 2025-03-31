@@ -1,6 +1,7 @@
 -- Avante
 return {
   "yetone/avante.nvim",
+  enabled = PLUGINS.avante.enabled,
   event = "VeryLazy",
   version = false, -- Never set this value to "*"! Never!
   opts = {
