@@ -28,9 +28,11 @@ sudo update-locale en_US.UTF-8
 
 install_tmux_plugins
 install_exa
+install_pyenv_linux
 
 # Link dotfiles
 install_dotfiles -r
 
 # Set zsh as the default
 check_default_shell
+run_install -r
