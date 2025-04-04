@@ -18,4 +18,3 @@ ripgrep
 nodejs
 npm
 golang-go
-eza
