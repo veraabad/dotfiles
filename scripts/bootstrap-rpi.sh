@@ -27,8 +27,9 @@ sudo locale-gen en_US.UTF-8
 sudo update-locale en_US.UTF-8
 
 install_tmux_plugins
-install_exa
+install_eza
 install_pyenv_linux
+install_starship_linux
 
 # Link dotfiles
 install_dotfiles -r
