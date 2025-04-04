@@ -1,76 +1,70 @@
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
+# Load Zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
-
-### End of Zinit's installer chunk
-
-### Plugins
-zinit wait lucid for \
-    atinit"zicompinit; zicdreplay"  \
-    zdharma/fast-syntax-highlighting \
-    OMZP::colored-man-pages \
-
-
-zinit wait lucid for \
-    OMZL::git.zsh \
-    OMZL::history.zsh \
-    OMZP::history \
-    atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions \
-    atload"unalias grv" \
-    OMZP::git
-
-### End of Plugins
-
-
-### Themes
-setopt promptsubst
-
-PS1="Loading Prompt >" # provide a simple prompt till the theme loads
-
-zinit wait'!' lucid for \
-    OMZL::prompt_info_functions.zsh \
-    atload"!spaceship_exec_time_precmd_hook; _zsh_autosuggest_start" \
-    denysdovhan/spaceship-prompt
-
-### End of Themes
-
-# export PATH=$PATH:$(ruby -e 'puts Gem.bindir')
-export PATH=$PATH:$HOME/.cargo/bin
-
-SPACESHIP_PROMPT_ADD_NEWLINE="true"
-SPACESHIP_CHAR_SYMBOL=" \uf054"
-SPACESHIP_CHAR_PREFIX="\uf315"
-SPACESHIP_CHAR_SUFFIX=(" ")
-SPACESHIP_CHAR_COLOR_SUCCESS="green"
-SPACESHIP_PROMPT_DEFAULT_PREFIX="$USER"
-SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
-SPACESHIP_USER_SHOW="true"
-
-alias ls='exa --icons --sort=name'
-alias lc='exa --icons -T --level=3'
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='mvim'
-fi
-
+# --- ENV VARS ---
+export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export LANG=en_US.UTF-8
+
+# --- STARSHIP PROMPT ---
+eval "$(starship init zsh)"
+
+# --- PLUGINS ---
+# zinit light ohmyzsh/ohmyzsh  # oh-my-zsh core (for compatibility with OMZ plugins)
+
+zinit light zsh-users/zsh-autosuggestions
+zinit snippet OMZP::git
+zinit snippet OMZP::colored-man-pages
+zinit snippet OMZP::python
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+# --- ALIASES ---
+alias ls='eza --icons --group-directories-first'
+alias lc='eza --tree'
+
+# --- NEOVIM CONFIG ALIASES ---
+alias nvb="NVIM_APPNAME=nvb nvim"
+alias NvimTest="NVIM_APPNAME=NvimTest nvim"
+
+# --- PREFERRED EDITOR ---
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='NVIM_APPNAME=nvb nvim'
+else
+  export EDITOR='NVIM_APPNAME=NvimTest nvim'
+fi
+
+# --- SSH AGENT TMUX HANDLING ---
+if [ -z ${TMUX+x} ]; then
+  if [ ! -e ~/.ssh/ssh_auth_sock ] && [ -e "$SSH_AUTH_SOCK" ]; then
+    ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+  fi
+else
+  export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+fi
+
+# --- LOCAL RC FILE ---
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# --- FZF NEOVIM SWITCHER ---
+nvims() {
+  items=("default" "nvb" "AstroNvim" "NvimTest")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim "$@"
+}
+
+# --- PYENV INIT ---
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init - zsh)"
+  eval "$(pyenv virtualenv-init -)"
+fi
