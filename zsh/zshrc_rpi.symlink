@@ -7,7 +7,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 # --- ENV VARS ---
 export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:/opt/nvim-linux-arm64/bin"
 export LANG=en_US.UTF-8
 
 # --- STARSHIP PROMPT ---
