@@ -60,32 +60,30 @@ install_oh_my_zsh() {
     fi
 }
 
-install_exa() {
+install_eza() {
     if [[ ! $(command -v exa 2>/dev/null) ]]; then
-        # For raspberry pi exa needs to be built
-        # check rust compiler is installed
-        if [[ ! $(command -v rustup 2>/dev/null) ]]; then
-            # cap RAM usage as rpi zero does not have enough
-            if [[ $(cat /proc/cpuinfo | grep "Raspberry Pi Zero") ]]; then
-                export RUSTUP_UNPACK_RAM=204472320
-            fi
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-        fi
-        # Install libgit2
-        source $HOME/.cargo/env
-        cd ~/
-        wget -c https://github.com/libgit2/libgit2/releases/download/v1.0.1/libgit2-1.0.1.zip
-        unzip libgit2-1.0.1.zip
-        cd libgit2-1.0.1
-        mkdir build && cd build
-        cmake ..
-        cmake --build .
-        cmake --build . --target install
-        cd ~/
-        git clone https://github.com/ogham/exa.git
-        cd exa
-        make install
-        cd $DOTFILES_DIR
+        # Detect CPU architecture
+        ARCH=$(uname -m)
+
+        case "$ARCH" in
+            x86_64)
+                ARCH_TAG="x86_64-unknown-linux-gnu"
+                ;;
+            aarch64 | arm64)
+                ARCH_TAG="aarch64-unknown-linux-gnu"
+                ;;
+            *)
+                echo "Unsupported architecture: $ARCH"
+                exit 1
+                ;;
+        esac
+
+        # Download and extract the correct binary
+        URL="https://github.com/eza-community/eza/releases/latest/download/eza_${ARCH_TAG}.tar.gz"
+        wget -c "$URL" -O - | tar xz
+        sudo chmod +x eza
+        sudo chown root:root eza
+        sudo mv eza /usr/local/bin/eza        # For raspberry pi exa needs to be built
     fi
 }
 
