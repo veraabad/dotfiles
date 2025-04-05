@@ -32,7 +32,7 @@ alias NvimTest="NVIM_APPNAME=NvimTest nvim"
 
 # --- PREFERRED EDITOR ---
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='NVIM_APPNAME=nvb nvim'
+  export EDITOR='NVIM_APPNAME=NvimTest nvim'
 else
   export EDITOR='NVIM_APPNAME=NvimTest nvim'
 fi
