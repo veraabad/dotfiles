@@ -17,6 +17,8 @@ eval "$(starship init zsh)"
 # zinit light ohmyzsh/ohmyzsh  # oh-my-zsh core (for compatibility with OMZ plugins)
 
 zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+zinit light Aloxaf/fzf-tab 
 zinit snippet OMZP::git
 zinit snippet OMZP::colored-man-pages
 zinit snippet OMZP::python
@@ -45,6 +47,19 @@ if [ -z ${TMUX+x} ]; then
 else
   export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 fi
+
+# --- HISTORY CONFIG ---
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
 # --- LOCAL RC FILE ---
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
