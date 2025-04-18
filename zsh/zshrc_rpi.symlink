@@ -16,6 +16,9 @@ eval "$(starship init zsh)"
 # --- PLUGINS ---
 # zinit light ohmyzsh/ohmyzsh  # oh-my-zsh core (for compatibility with OMZ plugins)
 
+zinit wait lucid for \
+  atload"autoload -Uz compinit; compinit" \
+  zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab 
