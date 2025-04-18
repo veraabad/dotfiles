@@ -13,23 +13,41 @@ return {
     local dashboard = require "alpha.themes.dashboard"
     local function header()
       return {
-        [[                                           bbbbbbbb            ]],
-        [[                                           b::::::b            ]],
-        [[                                           b::::::b            ]],
-        [[                                           b::::::b            ]],
-        [[                                            b:::::b            ]],
-        [[nnnn  nnnnnnnn    vvvvvvv           vvvvvvv b:::::bbbbbbbbb    ]],
-        [[n:::nn::::::::nn   v:::::v         v:::::v  b::::::::::::::bb  ]],
-        [[n::::::::::::::nn   v:::::v       v:::::v   b::::::::::::::::b ]],
-        [[nn:::::::::::::::n   v:::::v     v:::::v    b:::::bbbbb:::::::b]],
-        [[  n:::::nnnn:::::n    v:::::v   v:::::v     b:::::b    b::::::b]],
-        [[  n::::n    n::::n     v:::::v v:::::v      b:::::b     b:::::b]],
-        [[  n::::n    n::::n      v:::::v:::::v       b:::::b     b:::::b]],
-        [[  n::::n    n::::n       v:::::::::v        b:::::b     b:::::b]],
-        [[  n::::n    n::::n        v:::::::v         b:::::bbbbbb::::::b]],
-        [[  n::::n    n::::n         v:::::v          b::::::::::::::::b ]],
-        [[  n::::n    n::::n          v:::v           b:::::::::::::::b  ]],
-        [[  nnnnnn    nnnnnn           vvv            bbbbbbbbbbbbbbbb   ]],
+        [[               ***                                       ***               ]],
+        [[              ****                                       ****              ]],
+        [[              *****                                     *****              ]],
+        [[             *******                                   *******             ]],
+        [[             *******                                   *******             ]],
+        [[            *********                                 *********            ]],
+        [[           **********                                 **********           ]],
+        [[           ***********                               ***********           ]],
+        [[          *************                             *************          ]],
+        [[          *************                             *************          ]],
+        [[         ***************                           ***************         ]],
+        [[         ***************                           ***************         ]],
+        [[        *****************                         *****************        ]],
+        [[       ++++++++++++++++++*************************++++++++++++++++++       ]],
+        [[       --=++++++++++++++++***********************+++++++++++++++++--       ]],
+        [[      ----=+++++++++++++++***********************+++++++++++++++=----      ]],
+        [[      ------+++++++++++++++*********************+++++++++++++++------      ]],
+        [[     --------=++++++++++++++********************+++++++++++++=--------     ]],
+        [[    -----------+++++++++++++*******************+++++++++++++=----------    ]],
+        [[    ------------=++++++++++++*****************++++++++++++=------------    ]],
+        [[   --------------=+++++++++++*****************+++++++++++=--------------   ]],
+        [[     --------------+++++++++++***************+++++++++++---------------    ]],
+        [[       -------------=+++++++++***************+++++++++=-------------       ]],
+        [[         -------------+++++++++*************+++++++++-------------         ]],
+        [[            -----------=++++++++***********++++++++=-----------            ]],
+        [[              ----------=+++++++***********+++++++=----------              ]],
+        [[                 ---------+++++++*********+++++++---------                 ]],
+        [[                   --------=+++++*********+++++=--------                   ]],
+        [[                      -------+++++*******+++++-------                      ]],
+        [[                        ------=++++*****++++=------                        ]],
+        [[                           ----=+++*****+++=----                           ]],
+        [[                             ----+++***+++----                             ]],
+        [[                                --=+***+=---                               ]],
+        [[                                  --+*+--                                  ]],
+        [[                                    -+-                                    ]],
       }
     end
 
@@ -38,14 +56,14 @@ return {
     dashboard.section.buttons.val = {
       dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
       dashboard.button("c", "  Configuration", ":e $MYVIMRC <CR>"),
-      dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+      dashboard.button("q", "󰅙  Quit Neovim", ":qa<CR>"),
     }
 
     local function footer()
       -- Number of plugins
       local total_plugins = #vim.tbl_keys(require("lazy").plugins())
-      local datetime = os.date "%d-%m-%Y  %H:%M:%S"
-      local plugins_text = "\t" .. total_plugins .. " plugins  " .. datetime
+      local datetime = os.date "%d-%m-%Y  %H:%M:%S"
+      local plugins_text = "\t" .. total_plugins .. " plugins  " .. datetime
 
       -- Quote
       local fortune = require "alpha.fortune"
@@ -55,10 +73,13 @@ return {
     end
 
     dashboard.section.footer.val = footer()
-
-    dashboard.section.footer.opts.hl = "Constant"
-    dashboard.section.header.opts.hl = "Include"
-    dashboard.section.buttons.opts.hl = "Function"
+    -- Define your own highlight groups
+    vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#cc241d", bold = true }) -- Gruvbox red
+    vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#ff8c00" })             -- dark orange
+    vim.api.nvim_set_hl(0, "AlphaFooter", { fg = "#ff8c00", italic = true }) -- dark orange
+    dashboard.section.footer.opts.hl = "AlphaFooter"
+    dashboard.section.header.opts.hl = "AlphaHeader"
+    dashboard.section.buttons.opts.hl = "AlphaButtons"
     dashboard.section.buttons.opts.hl_shortcut = "Type"
     dashboard.opts.opts.noautocmd = true
 
