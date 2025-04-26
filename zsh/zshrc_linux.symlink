@@ -58,10 +58,9 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='NVIM_APPNAME=NvimTest nvim'
 fi
-
 # Symlink ssh-agent for use in tmux
 if [ -z ${TMUX+x} ]; then
-  if [ ! -e ~/.ssh/ssh_auth_sock ] && [ -e "$SSH_AUTH_SOCK" ]; then
+  if [ -e "$SSH_AUTH_SOCK" ]; then
     ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
   fi
 else
