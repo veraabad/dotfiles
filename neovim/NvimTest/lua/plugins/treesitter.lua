@@ -13,7 +13,14 @@ return {
   config = function()
     require("nvim-treesitter.configs").setup {
       -- A list of parser names, or "all"
-      ensure_installed = "all",
+      ensure_installed = { 
+        "arduino", "asm", "bash", "bitbake", "c", "cmake", "cpp", "comment", "csv",
+        "dart", "diff", "disassembly", "dockerfile", "doxygen", "git_config", "git_rebase",
+        "gitattributes", "gitcommit", "gpg", "html", "http", "ini", "ipkg", "javascript",
+        "jq", "json", "lua", "make", "markdown", "markdown_inline", "nginx", "objdump", "passwd",
+        "python", "query", "regex", "rust", "sql", "ssh_config", "swift", "tmux", "udev", "vim",
+        "vimdoc", "xml", "yaml"
+      },
 
       -- Install languages synchronously (only applied to `ensure_installed`)
       sync_install = false,
