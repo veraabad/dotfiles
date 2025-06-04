@@ -95,9 +95,23 @@ install_tmux_plugins() {
 }
 
 install_neovim_latest() {
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+        ARCH=$(uname -m)
+
+        case "$ARCH" in
+            x86_64)
+                ARCH_TAG="x86_64"
+                ;;
+            aarch64 | arm64)
+                ARCH_TAG="arm64"
+                ;;
+            *)
+                echo "Unsupported architecture: $ARCH"
+                exit 1
+                ;;
+        esac
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-${ARCH_TAG}.tar.gz
     sudo rm -rf /opt/nvim
-    sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+    sudo tar -C /opt -xzf nvim-linux-${ARCH_TAG}.tar.gz
 }
 
 link_file() {
