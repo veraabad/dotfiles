@@ -8,7 +8,6 @@ libssl-dev
 cmake
 python3-venv
 net-tools
-neovim
 stow
 gcc
 g++

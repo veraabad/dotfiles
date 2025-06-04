@@ -30,6 +30,7 @@ install_tmux_plugins
 install_eza
 install_pyenv_linux
 install_starship_linux
+install_neovim_latest
 
 # Link dotfiles
 install_dotfiles -r
