@@ -56,6 +56,14 @@ function M.find_files()
   end
 end
 
+function M.live_grep()
+  local opts = {
+    cwd = get_repo_root(),
+  }
+  local telescope = require "telescope.builtin"
+  telescope.live_grep(opts)
+end
+
 function M.find_functions()
   local opts = {
     ignore_symbols = {"variable"},
