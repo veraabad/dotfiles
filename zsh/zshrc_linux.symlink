@@ -69,6 +69,9 @@ else
   export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 fi
 
+# Load rust env
+[ -f ~/.cargo/env ] && . ~/.cargo/env
+
 # Load local rc file
 [ -f ~/.zshrc.local ] && . ~/.zshrc.local
 
