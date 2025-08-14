@@ -87,6 +87,36 @@ nvims() {
   NVIM_APPNAME=$config nvim $@
 }
 
+flash_sda() {
+  if [[ -z ${1} ]]
+  then
+    echo "Need to pass in the image path you want to flash" >&2
+    echo "Ex: flash_sda ~/path/to/image" >&2
+    return 1
+  fi
+
+  REMOUNT=false
+  if [[ ${2:-} == "m" ]]
+  then
+    REMOUNT=true
+  fi
+
+  # Get sudo passwd
+  sudo ls >/dev/null
+  IMAGE_PATH=$(readlink -f $1)
+  echo "Unmounting /dev/sda1 and /dev/sda2"
+  sudo umount /dev/sda1 /dev/sda2 || true
+  echo "Flashing ${IMAGE_PATH}"
+  sudo dd if=${IMAGE_PATH} status=none ibs=1M | pv -s $(stat -c %s ${IMAGE_PATH}) -ptebar | sudo dd of=/dev/sda status=none obs=1M oflag=direct
+  if [[ REMOUNT ]]
+  then
+    udisksctl mount -b /dev/sda1 || true
+    udisksctl mount -b /dev/sda2 || true
+  else
+    sudo eject /dev/sda
+  fi
+}
+
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
