@@ -2,7 +2,7 @@ PLUGINS = {
   nvim_treesitter = {
     enabled = true,
   },
-  copilot = {
+  avante = {
     enabled = false,
   },
   ruff_opt = "ruff" -- Available option is 'ruff_lsp'

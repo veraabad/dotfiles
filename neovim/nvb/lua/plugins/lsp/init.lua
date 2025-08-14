@@ -1,7 +1,7 @@
-local M = {}
+-- LSP
 
 -- Setup LSP handlers
-require("config.lsp.handlers").setup()
+require("plugins.lsp.handlers").setup()
 
 local custom_clangd_setup = function()
   require('lspconfig').clangd.setup({
@@ -62,33 +62,52 @@ local custom_ruff_setup = function()
   })
 end
 
-function M.setup()
-  local lsp_zero = require('lsp-zero')
+return {
+  'VonHeikemen/lsp-zero.nvim',
+  branch = 'v3.x',
+  -- opt = true,
+  event = "BufReadPre",
+  wants = { "vim-illuminate" },
+  dependencies = {
+    --- Uncomment the two plugins below if you want to manage the language servers from neovim
+    {'williamboman/mason.nvim'},
+    {'williamboman/mason-lspconfig.nvim'},
 
-  lsp_zero.on_attach(function(client, bufnr)
-    -- Configure keymapping
-    require('config.lsp.keymaps').setup(client, bufnr)
+    -- LSP Support
+    {'neovim/nvim-lspconfig'},
+    -- Autocompletion
+    {'hrsh7th/nvim-cmp'},
+    {'hrsh7th/cmp-nvim-lsp'},
+    {'L3MON4D3/LuaSnip'},
+    -- Higlight
+    {"RRethy/vim-illuminate"},
+  },
+  config = function()
+    local lsp_zero = require('lsp-zero')
 
-    -- Configure highlighting
-    if client.name ~= "ruff" then  -- Exclude Ruff from highlighting
-      require("config.lsp.highlighting").setup(client)
-    end
-  end)
+    lsp_zero.on_attach(function(client, bufnr)
+      -- Configure keymapping
+      require('plugins.lsp.keymaps').setup(client, bufnr)
 
-  -- to learn how to use mason.nvim with lsp-zero
-  -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
-  require('mason').setup({})
-  require('mason-lspconfig').setup({
-    ensure_installed = { 'gopls', 'html', 'jsonls', 'pyright', 'rust_analyzer', 'vimls', 'clangd', 'ruff'},
-    handlers = {
-      lsp_zero.default_setup,
-      clangd = custom_clangd_setup,
-      pyright = custom_pyright_setup,
-      ruff = custom_ruff_setup,
-    },
-  })
-  local lua_opts = lsp_zero.nvim_lua_ls()
-  require('lspconfig').lua_ls.setup(lua_opts)
-end
+      -- Configure highlighting
+      if client.name ~= "ruff" then  -- Exclude Ruff from highlighting
+        require("plugins.lsp.highlighting").setup(client)
+      end
+    end)
 
-return M
+    -- to learn how to use mason.nvim with lsp-zero
+    -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
+    require('mason').setup({})
+    require('mason-lspconfig').setup({
+      ensure_installed = { 'gopls', 'html', 'jsonls', 'pyright', 'rust_analyzer', 'vimls', 'clangd', 'ruff'},
+      handlers = {
+        lsp_zero.default_setup,
+        clangd = custom_clangd_setup,
+        pyright = custom_pyright_setup,
+        ruff = custom_ruff_setup,
+      },
+    })
+    local lua_opts = lsp_zero.nvim_lua_ls()
+    require('lspconfig').lua_ls.setup(lua_opts)
+  end,
+}

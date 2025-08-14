@@ -1,0 +1,44 @@
+return {}
+ -- Copilot
+-- TODO: enable again
+-- if PLUGINS.copilot.enabled then
+--   {
+--     "zbirenbaum/copilot-cmp",
+--     config = function ()
+--       require("copilot_cmp").setup()
+--     end
+--   },
+--
+--   {
+--     "zbirenbaum/copilot.lua",
+--     cmd = "Copilot",
+--     event = "VimEnter",
+--     dependencies = {
+--       "zbirenbaum/copilot-cmp",
+--     }
+--     config = function()
+--       require("copilot").setup({
+--         panel = { enabled = false },
+--         sugggestion = { enabled = false },
+--       })
+--     end,
+--   },
+--
+--   {
+--     'CopilotC-Nvim/CopilotChat.nvim',
+--     branch = 'main',
+--     event = "VimEnter",
+--     dependencies = {
+--       { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+--       { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+--     },
+--     config = function()
+--       local copilotChat = require('CopilotChat')
+--       local config = {
+--         debug = true,
+--         -- Add more configurations here
+--       }
+--       copilotChat.setup(config)
+--     end,
+--   },
+-- end

@@ -19,14 +19,49 @@ function M.find_buffers()
   end)
 end
 
-function M.find_files()
-	local opts = {}
-	local telescope = require "telescope.builtin"
+-- Find actual root directory of git repo
+local function get_repo_root()
+  local Job = require("plenary.job")
+  local cwd = vim.fn.getcwd()
+  -- If we are in one of the submodules, use the root repo as the CWD
+  local superproject = Job:new({
+    command = "git",
+    args = { "rev-parse", "--show-superproject-working-tree"},
+    cwd = cwd,
+  }):sync()[1]
 
-	local ok = pcall(telescope.git_files, opts)
-	if not ok then
-		telescope.find_files(opts)
-	end
+  -- Will fail if not in a superproject. 
+  if superproject and #superproject > 0 then
+    return superproject
+  end
+
+  local root = Job:new({
+    command = "git",
+    args = { "rev-parse", "--show-toplevel"},
+    cwd = cwd,
+  }):sync()[1]
+  return root
+end
+
+function M.find_files()
+  local opts = {
+    recurse_submodules = true,
+    cwd = get_repo_root(),
+  }
+  local telescope = require "telescope.builtin"
+
+  local ok = pcall(telescope.git_files, opts)
+  if not ok then
+    telescope.find_files(opts)
+  end
+end
+
+function M.live_grep()
+  local opts = {
+    cwd = get_repo_root(),
+  }
+  local telescope = require "telescope.builtin"
+  telescope.live_grep(opts)
 end
 
 function M.find_functions()
