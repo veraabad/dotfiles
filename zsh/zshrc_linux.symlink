@@ -108,7 +108,8 @@ flash_sda() {
   sudo umount /dev/sda1 /dev/sda2 || true
   echo "Flashing ${IMAGE_PATH}"
   sudo dd if=${IMAGE_PATH} status=none ibs=1M | pv -s $(stat -c %s ${IMAGE_PATH}) -ptebar | sudo dd of=/dev/sda status=none obs=1M oflag=direct
-  if [[ REMOUNT ]]
+
+  if ${REMOUNT}
   then
     udisksctl mount -b /dev/sda1 || true
     udisksctl mount -b /dev/sda2 || true
