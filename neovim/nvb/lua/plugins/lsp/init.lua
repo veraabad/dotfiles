@@ -16,6 +16,7 @@ local custom_clangd_setup = function()
     },
     filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto", "h", "hpp" },
     on_attach = function (client, bufnr)
+      require('plugins.lsp.keymaps').setup(client, bufnr)
       local whichkey = require "which-key"
       local mappings = {
         { "o", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
@@ -36,6 +37,9 @@ end
 
 local custom_pyright_setup = function()
   require('lspconfig').pyright.setup({
+    on_attach = function(client, bufnr)
+      require('plugins.lsp.keymaps').setup(client, bufnr)
+    end,
     settings = {
       -- python = {
       --   analysis = {
@@ -53,6 +57,7 @@ local custom_ruff_setup = function()
   require('lspconfig').ruff.setup({
     enabled = PLUGINS.ruff_opt == "ruff",
     on_attach = function(client, bufnr)
+      require('plugins.lsp.keymaps').setup(client, bufnr)
       -- Defer hover functionality to Pyright
       if client.name == "ruff" then
         client.server_capabilities.hoverProvider = false
@@ -63,51 +68,24 @@ local custom_ruff_setup = function()
 end
 
 return {
-  'VonHeikemen/lsp-zero.nvim',
-  branch = 'v3.x',
-  -- opt = true,
-  event = "BufReadPre",
-  wants = { "vim-illuminate" },
-  dependencies = {
-    --- Uncomment the two plugins below if you want to manage the language servers from neovim
-    {'williamboman/mason.nvim'},
-    {'williamboman/mason-lspconfig.nvim'},
-
-    -- LSP Support
-    {'neovim/nvim-lspconfig'},
-    -- Autocompletion
-    {'hrsh7th/nvim-cmp'},
-    {'hrsh7th/cmp-nvim-lsp'},
-    {'L3MON4D3/LuaSnip'},
-    -- Higlight
-    {"RRethy/vim-illuminate"},
+  "mason-org/mason-lspconfig.nvim",
+  opts = {
+    ensure_installed = { 'gopls', 'html', 'jsonls', 'pyright', 'rust_analyzer', 'vimls', 'clangd', 'ruff', 'lua_ls'},
+    handlers = {
+      function(server_name)
+        require('lspconfig')[server_name].setup({
+          on_attach = function(client, bufnr)
+            require('plugins.lsp.keymaps').setup(client, bufnr)
+          end,
+        })
+      end,
+      clangd = custom_clangd_setup,
+      pyright = custom_pyright_setup,
+      ruff = custom_ruff_setup,
+    },
   },
-  config = function()
-    local lsp_zero = require('lsp-zero')
-
-    lsp_zero.on_attach(function(client, bufnr)
-      -- Configure keymapping
-      require('plugins.lsp.keymaps').setup(client, bufnr)
-
-      -- Configure highlighting
-      if client.name ~= "ruff" then  -- Exclude Ruff from highlighting
-        require("plugins.lsp.highlighting").setup(client)
-      end
-    end)
-
-    -- to learn how to use mason.nvim with lsp-zero
-    -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
-    require('mason').setup({})
-    require('mason-lspconfig').setup({
-      ensure_installed = { 'gopls', 'html', 'jsonls', 'pyright', 'rust_analyzer', 'vimls', 'clangd', 'ruff'},
-      handlers = {
-        lsp_zero.default_setup,
-        clangd = custom_clangd_setup,
-        pyright = custom_pyright_setup,
-        ruff = custom_ruff_setup,
-      },
-    })
-    local lua_opts = lsp_zero.nvim_lua_ls()
-    require('lspconfig').lua_ls.setup(lua_opts)
-  end,
+  dependencies = {
+    { "mason-org/mason.nvim", opts = {} },
+    "neovim/nvim-lspconfig",
+  },
 }
