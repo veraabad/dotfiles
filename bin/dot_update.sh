@@ -8,8 +8,17 @@
 # handles installation, updates. Should be run periodically
 # to make sure everything is up to date.
 
+set -e
+
 export DOTFILES="$HOME/.dotfiles"
+SCRIPT_DIR="scripts"
 cd "$DOTFILES" || exit 1
 
+source ./$SCRIPT_DIR/print_source.sh
+source ./$SCRIPT_DIR/common.sh
+
 # add section to pull updates from git repo
-#
+# TODO
+
+# Link dotfiles
+install_dotfiles -l
