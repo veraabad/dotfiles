@@ -118,6 +118,11 @@ flash_sda() {
   fi
 }
 
+unset_pyenv() {
+  export PATH=$(echo $PATH | sed "s|$HOME/.pyenv/[^:]*:||g")
+  unset -f _pyenv_virtualenv_hook
+}
+
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
