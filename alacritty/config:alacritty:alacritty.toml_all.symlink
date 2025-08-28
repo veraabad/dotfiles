@@ -22,5 +22,7 @@ draw_bold_text_with_bright_colors = true
 
 [general]
 import = [
-  "~/.config/alacritty/catpuccin-latte.toml"
+  # "~/.config/alacritty/catppuccin-mocha.toml"
+  "~/.config/alacritty/catppuccin-macchiato.toml"
+  # "~/.config/alacritty/catppuccin-frappe.toml"
 ]
