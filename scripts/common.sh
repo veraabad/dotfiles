@@ -16,6 +16,51 @@ set -e
 ZSH_THEMES_DIR=$HOME/.oh-my-zsh/custom/themes
 ZSH_PLUGINS_DIR=$HOME/.oh-my-zsh/custom/plugins
 
+# TODO: return flags
+detect_os() {
+    # Check if running on macOS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "macOS"
+        return 0
+    fi
+
+    # Check if running on Linux
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Check if /etc/os-release exists (standard on modern Linux)
+        if [[ -f /etc/os-release ]]; then
+            source /etc/os-release
+
+            # Check for Ubuntu
+            if [[ "$ID" == "ubuntu" ]]; then
+                echo "Ubuntu Desktop"
+                return 0
+            fi
+
+            # Check for Debian
+            if [[ "$ID" == "debian" ]]; then
+                # Check if running on Raspberry Pi
+                if [[ -f /proc/device-tree/model ]] && grep -q "Raspberry Pi" /proc/device-tree/model 2>/dev/null; then
+                    echo "Debian 12 on Raspberry Pi"
+                    return 0
+                elif [[ -f /sys/firmware/devicetree/base/model ]] && grep -q "Raspberry Pi" /sys/firmware/devicetree/base/model 2>/dev/null; then
+                    echo "Debian 12 on Raspberry Pi"
+                    return 0
+                # Alternative check using CPU info
+                elif grep -q "BCM283" /proc/cpuinfo 2>/dev/null || grep -q "BCM271" /proc/cpuinfo 2>/dev/null; then
+                    echo "Debian 12 on Raspberry Pi"
+                    return 0
+                else
+                    echo "Debian (not on Raspberry Pi)"
+                    return 0
+                fi
+            fi
+        fi
+    fi
+
+    echo "Unknown OS"
+    return 1
+}
+
 install_zsh() {
     chsh -s $(which zsh) || sudo chsh -s $(which zsh) $(whoami)
     success "$($(which zsh) --version) has been setup"
