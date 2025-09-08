@@ -17,8 +17,11 @@ cd "$DOTFILES" || exit 1
 source ./$SCRIPT_DIR/print_source.sh
 source ./$SCRIPT_DIR/common.sh
 
+OS_FLAG=$(detect_os)
+echo "Found OS_FLAG: ${OS_FLAG}"
+
 # add section to pull updates from git repo
 # TODO
 
 # Link dotfiles
-install_dotfiles -l
+install_dotfiles ${OS_FLAG}
