@@ -20,7 +20,7 @@ ZSH_PLUGINS_DIR=$HOME/.oh-my-zsh/custom/plugins
 detect_os() {
     # Check if running on macOS
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "macOS"
+        echo "-a" # macOS
         return 0
     fi
 
@@ -32,7 +32,7 @@ detect_os() {
 
             # Check for Ubuntu
             if [[ "$ID" == "ubuntu" ]]; then
-                echo "Ubuntu Desktop"
+                echo "-l" # linux
                 return 0
             fi
 
@@ -40,24 +40,20 @@ detect_os() {
             if [[ "$ID" == "debian" ]]; then
                 # Check if running on Raspberry Pi
                 if [[ -f /proc/device-tree/model ]] && grep -q "Raspberry Pi" /proc/device-tree/model 2>/dev/null; then
-                    echo "Debian 12 on Raspberry Pi"
+                    echo "-r" # raspberry pi
                     return 0
                 elif [[ -f /sys/firmware/devicetree/base/model ]] && grep -q "Raspberry Pi" /sys/firmware/devicetree/base/model 2>/dev/null; then
-                    echo "Debian 12 on Raspberry Pi"
-                    return 0
-                # Alternative check using CPU info
-                elif grep -q "BCM283" /proc/cpuinfo 2>/dev/null || grep -q "BCM271" /proc/cpuinfo 2>/dev/null; then
-                    echo "Debian 12 on Raspberry Pi"
+                    echo "-r" # raspberry pi
                     return 0
                 else
-                    echo "Debian (not on Raspberry Pi)"
+                    echo "-l" # Debian (not on Raspberry Pi)
                     return 0
                 fi
             fi
         fi
     fi
 
-    echo "Unknown OS"
+    echo "Unknown OS" >&2
     return 1
 }
 
