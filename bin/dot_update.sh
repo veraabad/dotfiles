@@ -25,3 +25,6 @@ echo "Found OS_FLAG: ${OS_FLAG}"
 
 # Link dotfiles
 install_dotfiles ${OS_FLAG}
+
+# Re-run install scripts
+run_install ${OS_FLAG}
