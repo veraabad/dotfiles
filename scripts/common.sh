@@ -16,7 +16,6 @@ set -e
 ZSH_THEMES_DIR=$HOME/.oh-my-zsh/custom/themes
 ZSH_PLUGINS_DIR=$HOME/.oh-my-zsh/custom/plugins
 
-# TODO: return flags
 detect_os() {
     # Check if running on macOS
     if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -196,10 +195,10 @@ run_install() {
         "-r")OS_EXT="rpi" ;;
     esac
     info "Running Install Scripts"
-    git ls-tree --name-only -r HEAD | grep -E "\w*install_($OS_EXT|all).sh" | while read -r installer; do
+    while read -r installer <&3; do
         info "› ${installer}..."
-        $installer
-    done
+        bash $installer || info "Script ${installer} failed, continuing..."
+    done 3< <(git ls-tree --name-only -r HEAD | grep -E "\w*install_($OS_EXT|all).sh")
 }
 
 install_pyenv_linux() {
