@@ -6,6 +6,7 @@ local opt = vim.opt
 api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
 g.mapleader = " "
 g.maplocalleader = " "
+g.clipboard = "tmux"
 
 opt.timeoutlen = 300 -- Time in milliseconds to wait for a mapped sequence to complete.
 opt.termguicolors = true -- Enable colors in terminal
