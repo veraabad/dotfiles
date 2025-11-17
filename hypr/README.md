@@ -28,7 +28,7 @@
 
 ### walker
 * Install deps
-    `sudo apt install -y libgtk-4-dev libgtk-layer-shell-dev protobuf-compiler libcairo2-dev libpoppler-glib-dev valac`
+    `sudo apt install -y libgtk-4-dev libgtk-layer-shell-dev protobuf-compiler libcairo2-dev libpoppler-glib-dev valac sassc`
 * Install gtk4-layer-shell
     `git clone https://github.com/wmww/gtk4-layer-shell.git`
     `git checkout v1.3.0`
@@ -57,3 +57,34 @@
     `curl -LO https://github.com/abenz1267/walker/releases/download/v2.10.0/walker-v2.10.0-x86_64-unknown-linux-gnu.tar.gz`
     `tar -xzvf walker-v2.10.0-x86_64-unknown-linux-gnu.tar.gz`
     `sudo mv walker /usr/local/bin`
+
+### Other deps
+* Install mako
+    `curl -LO https://github.com/emersion/mako/releases/download/v1.10.0/mako-1.10.0.tar.gz`
+    `tar -xzvf mako-1.10.0.tar.gz`
+    `sudo mv mako /usr/bin/local/bin`
+    `cd mako`
+    `meson build`
+    `ninja -C build`
+    `sudo cp build/mako /usr/local/bin/`
+    `sudo cp build/makoctl /usr/local/bin/`
+    `sudo chmod 755 /usr/local/bin/mako*`
+
+* Install swaybg
+    `curl -LO https://github.com/swaywm/swaybg/releases/download/v1.2.1/swaybg-1.2.1.tar.gz`
+    `tar -xzvf swaybg-1.2.1.tar.gz`
+    `cd swaybg-1.2.1`
+    `meson build/`
+    `ninja -C build/`
+    `sudo ninja -C build/ install`
+
+* Install swayosd
+    `git clone https://github.com/ErikReider/SwayOSD.git`
+    `cd SwayOSD`
+    `git checkout v0.2.1`
+    `meson setup build`
+    `ninja -C build`
+    `meson install -C build`
+
+* Install polkit-gnome
+
