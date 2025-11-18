@@ -54,7 +54,7 @@
     ```
 
 * Install walker
-    `curl -LO https://github.com/abenz1267/walker/releases/download/v2.10.0/walker-v2.10.0-x86_64-unknown-linux-gnu.tar.gz`
+    `curl -LO https://github.com/abenz1267/walker/releases/download/v2.7.0/walker-v2.7.0-x86_64-unknown-linux-gnu.tar.gz`
     `tar -xzvf walker-v2.10.0-x86_64-unknown-linux-gnu.tar.gz`
     `sudo mv walker /usr/local/bin`
 
