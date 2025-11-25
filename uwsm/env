@@ -1,0 +1,12 @@
+# Changes require a relaunch of Hyprland to take effect.
+
+# Ensure Omarchy bins are in the path
+export DOTFILES_PATH=$HOME/.dotfiles
+export PATH=$DOTFILES_PATH/bin/:$PATH
+
+# Set default terminal and editor
+source ~/.config/uwsm/default
+
+# Activate mise if present on the system
+# TODO
+# omarchy-cmd-present mise && eval "$(mise activate bash)"
