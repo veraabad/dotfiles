@@ -3,10 +3,12 @@
 # Ensure Omarchy bins are in the path
 export DOTFILES_PATH=$HOME/.dotfiles
 export PATH=$DOTFILES_PATH/bin/:$PATH
+export TERMINAL=alacritty
+export EDITOR="NVIM_APPNAME=nvb nvim"
 
 # Set default terminal and editor
-source ~/.config/uwsm/default
+# source ~/.config/uwsm/default
 
-# Activate mise if present on the system
-# TODO
-# omarchy-cmd-present mise && eval "$(mise activate bash)"
+echo $TERMINAL > ~/uwsm_out.txt
+echo $EDITOR >> ~/uwsm_out.txt
+echo $DOTFILES_PATH >> ~/uwsm_out.txt
