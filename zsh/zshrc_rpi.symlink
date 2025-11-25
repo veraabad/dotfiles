@@ -21,7 +21,7 @@ zinit wait lucid for \
   zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
-zinit light Aloxaf/fzf-tab 
+zinit light Aloxaf/fzf-tab
 zinit snippet OMZP::git
 zinit snippet OMZP::colored-man-pages
 zinit snippet OMZP::python
@@ -37,9 +37,9 @@ alias NvimTest="NVIM_APPNAME=NvimTest nvim"
 
 # --- PREFERRED EDITOR ---
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='NVIM_APPNAME=NvimTest nvim'
+  export EDITOR='NVIM_APPNAME=nvb nvim'
 else
-  export EDITOR='NVIM_APPNAME=NvimTest nvim'
+  export EDITOR='NVIM_APPNAME=nvb nvim'
 fi
 
 # --- SSH AGENT TMUX HANDLING ---
