@@ -9,11 +9,12 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y meson ninja-build
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-# Install sddm
-sudo apt install --no-install-recommends -y sddm
-
-# Re-run installer if sddm doesn't make you choose over gdm3
-#     `sudo dpkg-reconfigure sddm`
+if [ $(cat /etc/X11/default-display-manager) != /usr/bin/sddm ]
+then
+    # Install sddm
+    sudo apt install --no-install-recommends -y sddm
+    sudo reboot now
+fi
 
 # Run install script
 bash <(curl -L https://raw.githubusercontent.com/JaKooLit/Ubuntu-Hyprland/24.04/auto-install.sh)
