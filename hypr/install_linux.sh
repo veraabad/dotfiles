@@ -7,7 +7,7 @@ sudo apt update && sudo apt upgrade -y
 
 # Install meson, ninja and rust
 sudo apt install -y meson ninja-build
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # Install sddm
 sudo apt install --no-install-recommends -y sddm
