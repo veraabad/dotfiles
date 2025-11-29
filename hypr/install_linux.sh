@@ -17,6 +17,11 @@ then
 fi
 
 # Run install script
+echo "******************************************************************"
+echo "                 About to install hyprland                        "
+echo "Go with these options: y, ENTER, ENTER, input_group, sddm, sddm_theme, gtk_themes, thunar, ags and nwg-look"
+echo "******************************************************************"
+sleep 5
 bash <(curl -L https://raw.githubusercontent.com/JaKooLit/Ubuntu-Hyprland/24.04/auto-install.sh)
 
 # Choose sddm, thunar, and other packages
