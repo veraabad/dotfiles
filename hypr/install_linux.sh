@@ -14,6 +14,7 @@ then
     # Install sddm
     sudo apt install --no-install-recommends -y sddm
     sudo reboot now
+    exit 0
 fi
 
 # Run install script
