@@ -2,6 +2,16 @@
 
 CONFIG_DIR="$HOME/.config"
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+TMPDIR=/tmp/hyprland_install
+
+mkdir -p ${TMPDIR}
+
+check_installed() {
+    if which $1 &>/dev/null
+    then
+        echo "$1"
+    fi
+}
 
 sudo apt update && sudo apt upgrade -y
 
@@ -18,87 +28,116 @@ then
 fi
 
 # Run install script
-echo "******************************************************************"
-echo "                 About to install hyprland                        "
-echo "Go with these options: y, ENTER, ENTER, input_group, sddm, sddm_theme, gtk_themes, thunar, ags and nwg-look"
-echo "******************************************************************"
-sleep 5
-bash <(curl -L https://raw.githubusercontent.com/JaKooLit/Ubuntu-Hyprland/24.04/auto-install.sh)
-
-# Choose sddm, thunar, and other packages
+if ! check_installed hyprland
+then
+    echo "******************************************************************"
+    echo "                 About to install hyprland                        "
+    echo "Go with these options: y, ENTER, ENTER, input_group, sddm, sddm_theme, gtk_themes, thunar, ags and nwg-look"
+    echo "******************************************************************"
+    sleep 5
+    bash <(curl -L https://raw.githubusercontent.com/JaKooLit/Ubuntu-Hyprland/24.04/auto-install.sh)
+fi
 
 # Install uwsm
-git clone https://github.com/Vladimir-csp/uwsm.git
-cd uwsm
-git checkout v0.24.3
-meson setup --prefix=/usr/local -Duuctl=enabled -Dfumon=enabled -Duwsm-app=enabled build
-meson install -C build
-cd ..
+if ! check_installed uwsm
+then
+    cd ${TMPDIR}
+    git clone https://github.com/Vladimir-csp/uwsm.git
+    cd uwsm
+    git checkout v0.24.3
+    meson setup --prefix=/usr/local -Duuctl=enabled -Dfumon=enabled -Duwsm-app=enabled build
+    meson install -C build
+    cd ${SCRIPT_DIR}
+fi
 
 # Install walker deps
 sudo apt install -y libgtk-4-dev libgtk-layer-shell-dev protobuf-compiler libcairo2-dev libpoppler-glib-dev valac sassc
 
 # Install gtk4-layer-shell
-git clone https://github.com/wmww/gtk4-layer-shell.git
-cd gtk4-layer-shell
-git checkout v1.3.0
-meson setup -Dexamples=false -Ddocs=false -Dtests=false build
-ninja -C build
-sudo ninja -C build install
-sudo ldconfig
-cd ..
+if [ ! -e /usr/local/lib/x86_64-linux-gnu/libgtk4-layer-shell.so ]
+then
+    cd ${TMPDIR}
+    git clone https://github.com/wmww/gtk4-layer-shell.git
+    cd gtk4-layer-shell
+    git checkout v1.3.0
+    meson setup -Dexamples=false -Ddocs=false -Dtests=false build
+    ninja -C build
+    sudo ninja -C build install
+    sudo ldconfig
+    cd ${SCRIPT_DIR}
+fi
 
 # Install elephant
-git clone https://github.com/abenz1267/elephant
-cd elephant
-git checkout v2.15.0
-cd cmd/elephant
-go install elephant.go
-sudo cp ~/go/bin/elephant /usr/local/bin/
-cd ..
+if ! check_installed elephant
+then
+    cd ${TMPDIR}
+    git clone https://github.com/abenz1267/elephant
+    cd elephant
+    git checkout v2.15.0
+    cd cmd/elephant
+    go install elephant.go
+    sudo cp ~/go/bin/elephant /usr/local/bin/
 
-# elephant - Create configuration directories
-mkdir -p ~/.config/elephant/providers
+    # elephant - Create configuration directories
+    mkdir -p ~/.config/elephant/providers
 
-# elephant - Build and install a provider (example: desktop applications)
-cd internal/providers/desktopapplications
-go build -buildmode=plugin
-cp desktopapplications.so ~/.config/elephant/providers/
-cd ${SCRIPT_DIR}
+    # elephant - Build and install a provider (example: desktop applications)
+    cd ${TMPDIR}/elephant/internal/providers/desktopapplications
+    go build -buildmode=plugin
+    cp desktopapplications.so ~/.config/elephant/providers/
+    cd ${SCRIPT_DIR}
+fi
 
 # Install walker
-curl -LO https://github.com/abenz1267/walker/releases/download/v2.7.0/walker-v2.7.0-x86_64-unknown-linux-gnu.tar.gz
-tar -xzvf walker-v2.7.0-x86_64-unknown-linux-gnu.tar.gz
-sudo mv walker /usr/local/bin
+if ! check_installed walker
+then
+    cd ${TMPDIR}
+    curl -LO https://github.com/abenz1267/walker/releases/download/v2.7.0/walker-v2.7.0-x86_64-unknown-linux-gnu.tar.gz
+    tar -xzvf walker-v2.7.0-x86_64-unknown-linux-gnu.tar.gz
+    sudo mv walker /usr/local/bin
+    cd ${SCRIPT_DIR}
+fi
 
 # Install mako
-curl -LO https://github.com/emersion/mako/releases/download/v1.10.0/mako-1.10.0.tar.gz
-tar -xzvf mako-1.10.0.tar.gz
-cd mako
-meson build
-ninja -C build
-sudo cp build/mako /usr/local/bin/
-sudo cp build/makoctl /usr/local/bin/
-sudo chmod 755 /usr/local/bin/mako*
-cd ..
+if ! check_installed mako
+then
+    cd ${TMPDIR}
+    curl -LO https://github.com/emersion/mako/releases/download/v1.10.0/mako-1.10.0.tar.gz
+    tar -xzvf mako-1.10.0.tar.gz
+    cd mako
+    meson build
+    ninja -C build
+    sudo cp build/mako /usr/local/bin/
+    sudo cp build/makoctl /usr/local/bin/
+    sudo chmod 755 /usr/local/bin/mako*
+    cd ${SCRIPT_DIR}
+fi
 
 # Install swaybg
-curl -LO https://github.com/swaywm/swaybg/releases/download/v1.2.1/swaybg-1.2.1.tar.gz
-tar -xzvf swaybg-1.2.1.tar.gz
-cd swaybg-1.2.1
-meson build/
-ninja -C build/
-sudo ninja -C build/ install
-cd ..
+if ! check_installed swaybg
+then
+    cd ${TMPDIR}
+    curl -LO https://github.com/swaywm/swaybg/releases/download/v1.2.1/swaybg-1.2.1.tar.gz
+    tar -xzvf swaybg-1.2.1.tar.gz
+    cd swaybg-1.2.1
+    meson build/
+    ninja -C build/
+    sudo ninja -C build/ install
+    cd ${SCRIPT_DIR}
+fi
 
 # Install swayosd
-git clone https://github.com/ErikReider/SwayOSD.git
-cd SwayOSD
-git checkout v0.2.1
-meson setup build
-ninja -C build
-meson install -C build
-cd ..
+if ! check_installed swayosd-server
+then
+    cd ${TMPDIR}
+    git clone https://github.com/ErikReider/SwayOSD.git
+    cd SwayOSD
+    git checkout v0.2.1
+    meson setup build
+    ninja -C build
+    meson install -C build
+    cd ${SCRIPT_DIR}
+fi
 
 # Install config files
 for dir in "$SCRIPT_DIR"/*/; do
