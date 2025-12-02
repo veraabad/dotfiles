@@ -9,8 +9,9 @@ mkdir -p ${TMPDIR}
 check_installed() {
     if which $1 &>/dev/null
     then
-        echo "$1"
+        return 0
     fi
+    return 1
 }
 
 sudo apt update && sudo apt upgrade -y
@@ -73,18 +74,31 @@ then
     cd ${TMPDIR}
     git clone https://github.com/abenz1267/elephant
     cd elephant
-    git checkout v2.15.0
+    git checkout v2.3.1
     cd cmd/elephant
     go install elephant.go
     sudo cp ~/go/bin/elephant /usr/local/bin/
 
-    # elephant - Create configuration directories
-    mkdir -p ~/.config/elephant/providers
+    # elephant - Create provider directories
+    sudo mkdir -p /etc/xdg/elephant/providers
 
     # elephant - Build and install a provider (example: desktop applications)
-    cd ${TMPDIR}/elephant/internal/providers/desktopapplications
-    go build -buildmode=plugin
-    cp desktopapplications.so ~/.config/elephant/providers/
+    PROVIDERS=(
+        "desktopapplications"
+        "bluetooth"
+        "files"
+        "calc"
+        "providerlist"
+        "runner"
+        "websearch"
+        "clipboard"
+    )
+    for provider in "${PROVIDERS[@]}"; do
+        cd ${TMPDIR}/elephant/internal/providers/${provider}
+        go build -buildmode=plugin
+        sudo chmod 755 ${provider}.so
+        sudo cp ${provider}.so /etc/xdg/elephant/providers/
+    done
     cd ${SCRIPT_DIR}
 fi
 
