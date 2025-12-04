@@ -110,9 +110,23 @@ fi
 if ! check_installed walker
 then
     cd ${TMPDIR}
-    curl -LO https://github.com/abenz1267/walker/releases/download/v2.7.0/walker-v2.7.0-x86_64-unknown-linux-gnu.tar.gz
-    tar -xzvf walker-v2.7.0-x86_64-unknown-linux-gnu.tar.gz
-    sudo mv walker /usr/local/bin
+    git clone https://github.com/abenz1267/walker.git
+    cd walker
+    git checkout v2.11.3
+    cargo build --release
+    sudo install -Dm 755 target/release/walker /usr/local/bin/walker
+    sudo install -Dm 644 LICENSE /usr/local/share/licenses/walker/
+    sudo install -Dm 644 resources/config.toml /etc/xdg/walker/config.toml
+    sudo install -Dm 644 resources/themes/default/item.xml /etc/xdg/walker/themes/default/item.xml
+    sudo install -Dm 644 resources/themes/default/item_calc.xml /etc/xdg/walker/themes/default/item_calc.xml
+    sudo install -Dm 644 resources/themes/default/item_clipboard.xml /etc/xdg/walker/themes/default/item_clipboard.xml
+    sudo install -Dm 644 resources/themes/default/item_dmenu.xml /etc/xdg/walker/themes/default/item_dmenu.xml
+    sudo install -Dm 644 resources/themes/default/item_files.xml /etc/xdg/walker/themes/default/item_files.xml
+    sudo install -Dm 644 resources/themes/default/item_providerlist.xml /etc/xdg/walker/themes/default/item_providerlist.xml
+    sudo install -Dm 644 resources/themes/default/item_symbols.xml /etc/xdg/walker/themes/default/item_symbols.xml
+    sudo install -Dm 644 resources/themes/default/layout.xml /etc/xdg/walker/themes/default/layout.xml
+    sudo install -Dm 644 resources/themes/default/preview.xml /etc/xdg/walker/themes/default/preview.xml
+    sudo install -Dm 644 resources/themes/default/style.css /etc/xdg/walker/themes/default/style.css
     cd ${SCRIPT_DIR}
 fi
 
