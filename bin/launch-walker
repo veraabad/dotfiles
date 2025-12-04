@@ -8,6 +8,7 @@ fi
 # Ensure walker service is running
 if ! pgrep -f "walker --gapplication-service" > /dev/null; then
   setsid uwsm-app -- walker --gapplication-service &
+  sleep 2
 fi
 
 exec walker --width 644 --maxheight 300 --minheight 300 "$@"
