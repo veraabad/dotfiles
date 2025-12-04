@@ -74,7 +74,7 @@ then
     cd ${TMPDIR}
     git clone https://github.com/abenz1267/elephant
     cd elephant
-    git checkout v2.3.1
+    git checkout v2.15.0
     cd cmd/elephant
     go install elephant.go
     sudo cp ~/go/bin/elephant /usr/local/bin/
@@ -92,6 +92,10 @@ then
         "runner"
         "websearch"
         "clipboard"
+        "menus"
+        "todo"
+        "unicode"
+        "symbols"
     )
     for provider in "${PROVIDERS[@]}"; do
         cd ${TMPDIR}/elephant/internal/providers/${provider}
