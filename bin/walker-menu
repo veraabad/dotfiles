@@ -452,7 +452,7 @@ show_update_password_menu() {
 
 show_system_menu() {
   case $(menu "System" "  Lock\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown") in
-  *Lock*) hyprlock ;; # omarchy-lock-screen ;;
+  *Lock*) pidof hyprlock || hyprlock ;;
   *Screensaver*) omarchy-launch-screensaver force ;;
   *Suspend*) systemctl suspend ;;
   *Restart*) systemctl reboot --no-wall;;
