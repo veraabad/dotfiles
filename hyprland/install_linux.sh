@@ -142,6 +142,18 @@ then
     cd ${SCRIPT_DIR}
 fi
 
+# Install satty
+if ! check_installed satty
+then
+    cd ${TMPDIR}
+    git clone https://github.com/Satty-org/Satty.git satty
+    cd satty
+    git checkout v0.20.1
+    make build-release
+    sudo install -Dm 755 target/release/satty /usr/local/bin/satty
+    cd ${SCRIPT_DIR}
+fi
+
 # Install mako
 if ! check_installed mako
 then
