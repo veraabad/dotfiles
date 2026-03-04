@@ -130,6 +130,18 @@ then
     cd ${SCRIPT_DIR}
 fi
 
+# Install wayfreeze
+if ! check_installed wayfreeze
+then
+    cd ${TMPDIR}
+    git clone https://github.com/Jappie3/wayfreeze.git
+    cd wayfreeze
+    git checkout 0.2.0
+    cargo build --release
+    sudo install -Dm 755 target/release/wayfreeze /usr/local/bin/wayfreeze
+    cd ${SCRIPT_DIR}
+fi
+
 # Install mako
 if ! check_installed mako
 then
