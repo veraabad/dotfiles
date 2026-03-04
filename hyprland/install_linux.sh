@@ -52,7 +52,7 @@ then
 fi
 
 # Install walker deps
-sudo apt install -y libgtk-4-dev libgtk-layer-shell-dev protobuf-compiler libcairo2-dev libpoppler-glib-dev valac sassc
+sudo apt install -y libgtk-4-dev libgtk-layer-shell-dev protobuf-compiler libcairo2-dev libpoppler-glib-dev valac sassc slurp
 
 # Install gtk4-layer-shell
 if [ ! -e /usr/local/lib/x86_64-linux-gnu/libgtk4-layer-shell.so ]
