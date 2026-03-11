@@ -5,6 +5,7 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PATH:/opt/nvim/bin"
 export PATH="$PATH:$HOME/.npm-global/bin"
 export PATH="$PATH:$HOME/.dotfiles/bin"
+export GPG_TTY=$(tty)
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -58,7 +59,7 @@ eval "$(starship init zsh)"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='NVIM_APPNAME=nvb nvim'
 else
-  export EDITOR='NVIM_APPNAME=NvimTest nvim'
+  export EDITOR='NVIM_APPNAME=nvb nvim'
 fi
 # Symlink ssh-agent for use in tmux
 if [ -z ${TMUX+x} ]; then
