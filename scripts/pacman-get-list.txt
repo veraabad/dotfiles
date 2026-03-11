@@ -24,3 +24,4 @@ qterminal
 keychain
 xclip
 wl-clipboard
+pv
