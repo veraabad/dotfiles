@@ -29,6 +29,18 @@ detect_os() {
         if [[ -f /etc/os-release ]]; then
             source /etc/os-release
 
+            # Check for Arch Linux
+            if [[ "$ID" == "arch" ]]; then
+                echo "-arch" # Arch Linux
+                return 0
+            fi
+
+            # Check for Arch-based distros (Manjaro, EndeavourOS, etc.)
+            if [[ "$ID_LIKE" == *"arch"* ]]; then
+                echo "-arch" # Arch-based
+                return 0
+            fi
+
             # Check for Ubuntu
             if [[ "$ID" == "ubuntu" ]]; then
                 echo "-l" # linux
@@ -197,6 +209,7 @@ run_install() {
     info "Running Install Scripts"
     while read -r installer <&3; do
         info "› ${installer}..."
+        # TODO: figure out how to skip hyprland install on omarchy
         bash $installer || info "Script ${installer} failed, continuing..."
     done 3< <(git ls-tree --name-only -r HEAD | grep -E "\w*install_($OS_EXT|all).sh")
 }
