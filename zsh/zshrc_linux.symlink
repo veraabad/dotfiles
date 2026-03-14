@@ -5,6 +5,7 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PATH:/opt/nvim/bin"
 export PATH="$PATH:$HOME/.npm-global/bin"
 export PATH="$PATH:$HOME/.dotfiles/bin"
+export PATH="$PATH:$HOME/.local/bin"
 export GPG_TTY=$(tty)
 
 # Set name of the theme to load --- if set to "random", it will
@@ -136,4 +137,4 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 # Add to ~/.zprofile
-# eval `keychain --agents ssh --eval`
+# eval `keychain --eval id_rsa id_dsa 0123ABCD`
