@@ -210,6 +210,10 @@ run_install() {
     while read -r installer <&3; do
         info "› ${installer}..."
         # TODO: figure out how to skip hyprland install on omarchy
+        if [[ ${installer} == *"hyprland"* ]]; then
+          info "Skipping ${installer}"
+          continue
+        fi
         bash $installer || info "Script ${installer} failed, continuing..."
     done 3< <(git ls-tree --name-only -r HEAD | grep -E "\w*install_($OS_EXT|all).sh")
 }
