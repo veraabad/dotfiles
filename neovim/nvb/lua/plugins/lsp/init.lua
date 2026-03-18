@@ -68,6 +68,8 @@ local custom_ruff_setup = function()
 end
 
 return {
+  require("plugins.lsp.lint"),
+  {
   "mason-org/mason-lspconfig.nvim",
   opts = {
     ensure_installed = { 'gopls', 'html', 'jsonls', 'pyright', 'rust_analyzer', 'vimls', 'clangd', 'ruff', 'lua_ls'},
@@ -87,5 +89,7 @@ return {
   dependencies = {
     { "mason-org/mason.nvim", opts = {} },
     "neovim/nvim-lspconfig",
+
+  },
   },
 }
