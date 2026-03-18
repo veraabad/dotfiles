@@ -3,4 +3,4 @@ vim.bo.tabstop = 4
 vim.bo.softtabstop = 4
 vim.bo.textwidth = 180
 vim.bo.expandtab = true
-
+vim.treesitter.start()
