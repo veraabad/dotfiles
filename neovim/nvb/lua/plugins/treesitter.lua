@@ -8,9 +8,10 @@ return {
   event = "BufRead",
   config = function()
     require("nvim-treesitter").setup {
+      install_dir = vim.fn.stdpath("data") .. "/site",
       -- A list of parser names, or "all"
       ensure_installed = {
-        "arduino", "asm", "bash", "bitbake", "c", "cmake", "cpp", "comment", "csv",
+        "arduino", "asm", "bash", "bitbake", "capnp", "c", "cmake", "cpp", "comment", "csv",
         "dart", "diff", "disassembly", "dockerfile", "doxygen", "git_config", "git_rebase",
         "gitattributes", "gitcommit", "gpg", "html", "http", "ini", "ipkg", "javascript",
         "jq", "json", "lua", "make", "markdown", "markdown_inline", "nginx", "objdump", "passwd",
