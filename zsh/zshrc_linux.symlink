@@ -169,5 +169,85 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
+is_ipv4() {
+  emulate -L zsh          # options become function-local
+  setopt extended_glob
+
+  local ip=$1 o
+  local -a octets
+
+  [[ $ip == <->.<->.<->.<-> ]] || return 1
+
+  octets=("${(@s:.:)ip}")
+  (( $#octets == 4 )) || return 1
+
+  for o in $octets; do
+    [[ $o == 0 || $o == [1-9][0-9]# ]] || return 1
+    (( o <= 255 )) || return 1
+  done
+}
+
+ping_it() {
+    NAME=$1
+    TIMEOUT_MIN=${2:-5}
+    TIMEOUT_SEC=$((TIMEOUT_MIN * 60))
+    SSH_CONFIG=~/.ssh/config
+    VALID_IP=""
+
+    # Check if its IP
+    if is_ipv4 ${NAME}
+    then
+        VALID_IP=${NAME}
+    fi
+
+    # Check if ssh config name
+    if grep -q -w ${NAME} ${SSH_CONFIG}
+    then
+        # Pull IP value
+        VALID_IP=$(grep -w -A 5 ${NAME} ${SSH_CONFIG} | grep -m 1 "Hostname" | xargs | cut -d ' ' -f 2)
+    fi
+
+    if [ -z ${VALID_IP} ]
+    then
+        echo "Argument ${NAME} is not a valid ssh config name or a valid IP address"
+        return 1
+    fi
+
+    ELAPSED=0
+    while [ ${ELAPSED} -lt ${TIMEOUT_SEC} ]
+    do
+        if ping -c 1 -W 1 ${VALID_IP} &>/dev/null
+        then
+            notify-send "${NAME} ready"
+            return 0
+        fi
+        sleep 1
+        ELAPSED=$((ELAPSED + 2))
+    done
+
+    notify-send "${NAME} timed out after ${TIMEOUT_MIN} min"
+    return 1
+}
+
+# Tab-completion of ssh hosts
+_ping_it() {
+    local -a hosts
+    hosts=(${(f)"$(awk 'tolower($1)=="host"{for(i=2;i<=NF;i++) print $i}' ~/.ssh/config 2>/dev/null)"})
+    hosts=(${hosts:#*[*?]*})
+
+    if (( CURRENT == 2 )); then
+        _describe 'ssh host' hosts
+    fi
+}
+compdef _ping_it ping_it
+
 # Add to ~/.zprofile
 # eval `keychain --agents ssh --eval`
+
+# Add to ~/.zshrc.local
+# git-wt() {
+#   local root=${1:-$PWD}
+#   export PYTHONPATH="$root/common:$root/captain:$root/ss_capnp"
+#   echo "PYTHONPATH -> $root/{common,captain,ss_capnp}"
+# }
+
