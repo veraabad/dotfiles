@@ -8,5 +8,5 @@ mkdir -p $CATPPUCCIN_DIR
 
 if [ ! -d $CATPPUCCIN_DIR/tmux ]
 then
-    git clone -b v2.1.3 https://github.com/catppuccin/tmux.git $CATPPUCCIN_DIR/tmux
+    git clone -b v2.3.0 https://github.com/catppuccin/tmux.git $CATPPUCCIN_DIR/tmux
 fi
