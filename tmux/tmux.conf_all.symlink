@@ -2,6 +2,11 @@
 set -g default-terminal "screen-256color"
 set -g history-limit 10000
 
+# For claude code
+set -g allow-passthrough on
+set -s extended-keys on
+set -as terminal-features 'xterm*:extkeys'
+
 # Search Mode VI
 set-window-option -g mode-keys vi
 bind-key h select-pan -L
@@ -22,6 +27,11 @@ set -g @catppuccin_window_current_text " #W"
 
 # Load catppuccin
 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+
+# Catppuccin drops fill= from the message styles, which lets the status
+# line show through behind the command prompt
+set -g message-style         "fg=#8bd5ca,bg=#363a4f,fill=#363a4f"
+set -g message-command-style "fg=#8bd5ca,bg=#363a4f,fill=#363a4f"
 
 # Make the status line pretty and add some modules
 set -g status-right-length 100
